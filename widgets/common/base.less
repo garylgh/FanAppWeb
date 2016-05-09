@@ -1,0 +1,45 @@
+html, body {
+    -webkit-user-select: none;   /* 禁止选中文本（如无文本选中需求，此为必选项） */
+    user-select: none;
+    font-size: 18px;
+    margin: 0;
+    padding: 0;
+
+    width: 100%;
+    height: 100%;
+    background: #f1f1f1;
+}
+
+a, img {
+    -webkit-touch-callout: none; /* 禁止长按链接与图片弹出菜单 */
+}
+
+ul,li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    position: relative;
+    width: 100%;
+    overflow: auto;
+    // background-color: #aaa;
+}
+
+.c-flex {
+  display: -webkit-flex;
+  display: flex;
+}
+
+div {
+    font-size: 12px; // 默认写上dpr为1的fontSize
+}
+
+[data-dpr="2"] div {
+    font-size: 24px;
+}
+
+[data-dpr="3"] div {
+    font-size: 36px;
+}

@@ -1,0 +1,9 @@
+.dist/*
+.tmp/*
+build/*
+clint/*
+docs/*
+node_modules/*
+test/*
+client/libs/*
+fis-conf.js
