@@ -23,7 +23,8 @@ ul,li {
 .container {
     position: relative;
     width: 100%;
-    overflow: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
     // background-color: #aaa;
 }
 
@@ -43,3 +44,13 @@ div {
 [data-dpr="3"] div {
     font-size: 36px;
 }
+
+.clearfix:after {
+     visibility: hidden;
+     display: block;
+     font-size: 0;
+     content: " ";
+     clear: both;
+     height: 0;
+ }
+.clearfix { display: inline-block; }

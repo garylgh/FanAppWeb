@@ -7,7 +7,9 @@ insert_final_newline = true
 charset = utf-8
 
 #代码缩进为四个空格
-[*.{html,js,tpl,ts,css,scss,less,xml}]
+[*.{html,js,jsx,tpl,ts,css,scss,less,xml}]
 indent_style = tab
 indent_size = 1
 trim_trailing_whitespace = true
+insert_final_newline = true
+charset = utf-8

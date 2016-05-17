@@ -11,7 +11,12 @@ fis.hook('commonjs', {
     // 参考 http://imweb.io/topic/565c548a3ad940357eb99874
 	paths: {
 		react: './node_modules/react/dist/react.min.js',
-		'react-dom': './node_modules/react-dom/dist/react-dom.min.js'
+		'react-dom': './node_modules/react-dom/dist/react-dom.min.js',
+		'react-redux': './node_modules/react-redux/dist/react-redux.min.js',
+		'redux': './node_modules/redux/dist/redux.min.js',
+		'react-router': './node_modules/react-router/umd/ReactRouter.min.js',
+		'redux-thunk': './node_modules/redux-thunk/dist/redux-thunk.min.js',
+		'redux-logger': './node_modules/redux-logger/dist/index.min.js'
 	}
 });
 
@@ -19,15 +24,35 @@ fis.hook('commonjs', {
 fis
 .match('./node_modules/react/dist/react.min.js', {
 	isMod: true,
-	moduleId: 'react'  // 为utils设置一个moduleId，希望以后能直接require('utils')
+	moduleId: 'react'  // 为utils设置一个moduleId，希望以后能直接require('react')
 })
 .match('./node_modules/react-dom/dist/react-dom.min.js', {
 	isMod: true,
-	moduleId: 'react-dom'  // 为utils设置一个moduleId，希望以后能直接require('utils')
+	moduleId: 'react-dom'  // 为utils设置一个moduleId，希望以后能直接require('react-dom')
+})
+.match('./node_modules/react-redux/dist/react-redux.min.js', {
+	isMod: true,
+	moduleId: 'react-redux'  // 为utils设置一个moduleId，希望以后能直接require('react-redux')
+})
+.match('./node_modules/redux/dist/redux.min.js', {
+	isMod: true,
+	moduleId: 'redux'  // 为utils设置一个moduleId，希望以后能直接require('react-redux')
+})
+.match('./node_modules/react-router/umd/ReactRouter.min.js', {
+	isMod: true,
+	moduleId: 'react-router'  // 为utils设置一个moduleId，希望以后能直接require('react-redux')
+})
+.match('./node_modules/redux-thunk/dist/redux-thunk.min.js', {
+	isMod: true,
+	moduleId: 'redux-thunk'  // 为utils设置一个moduleId，希望以后能直接require('react-redux')
+})
+.match('./node_modules/redux-logger/dist/index.min.js', {
+	isMod: true,
+	moduleId: 'redux-logger'  // 为utils设置一个moduleId，希望以后能直接require('react-redux')
 });
 
 /*支持react*/
-fis.match('*.{jsx, react.js}', {
+fis.match('app/**/*.{js, jsx, react.js}', {
     rExt: '.js',
 	isMod: true,
 	// 使用babel支持es6
@@ -159,7 +184,10 @@ fis.match('::package', {
         'pkg/vendor.js': [
             'dep/mod.js',
             'node_modules/**/react.min.js',
-            'node_modules/**/react-dom.min.js'
+            'node_modules/**/react-dom.min.js',
+			'node_modules/react-redux/**/react-redux.min.js',
+			'node_modules/redux/**/redux.min.js',
+			'node_modules/react-router/umd/ReactRouter.min.js'
         ]
     })
 });

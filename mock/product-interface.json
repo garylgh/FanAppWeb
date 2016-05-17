@@ -1,0 +1,155 @@
+GET /v1/rebates?cateId=1&p=1&ts=xxx
+{
+    "errNo": 0,
+    "errorMsg": "",
+    "data": {
+        "list": [{
+            "id": "",
+            "name": "product name",
+            "picUrl": "",
+            "picTargetUrl": "",
+            "category": "",
+            "srcType": "",
+            "grossPrice": "",
+            "price": "",
+            "discount": "",
+            "commission": "",
+            "commissionRate": "",
+            "updateTime": "",
+            "jumpType": ""
+        }],
+        "nextPage": "",
+        "totalPages": "",
+        "totalNum": ""
+    }
+}
+
+// 产品列表
+GET /v1/products?cateId=1&p=1&ts=xxx
+{
+    "errNo": 0,
+    "errorMsg": "",
+    "data": {
+        "list": [{
+            "id": "",
+            "name": "product name",
+            "picUrl": "",
+            "picTargetUrl": "",
+            "category": "",
+            "srcType": "",
+            "grossPrice": "",
+            "price": "",
+            "discount": "",
+            "commission": "",
+            "commissionRate": "",
+            "updateTime": ""
+        }],
+        "nextPage": "",
+        "totalPages": "",
+        "totalNum": ""
+    }
+}
+
+// 品牌聚合
+GET /v1/brands
+{
+    "errNo": 0,
+    "errorMsg": "",
+    "data": {
+        "brand": {
+            "id": "",
+            "name": "",
+            "logo": "",
+            "rate": ""
+        },
+        "list": [{
+            "id": "",
+            "name": "product name",
+            "picUrl": "",
+            "picTargetUrl": "",
+            "category": "",
+            "srcType": "",
+            "grossPrice": "",
+            "price": "",
+            "discount": "",
+            "commission": "",
+            "commissionRate": "",
+            "updateTime": ""
+        }],
+        "nextPage": "",
+        "totalPages": "",
+        "totalNum": ""
+    }
+}
+
+// 账户余额
+// installId abbr sid
+GET /v1/balances?sid=xx
+{
+    "errNo": 0,
+    "errorMsg": "",
+    "data": {
+        "id": "",
+        "installId": "",
+        "userInfo": {
+            "name": "",
+            "type": "", // 账户类型0：匿名账户 1：真实账户
+        },
+        "totalAmount": "",
+        "availableAmount": "",
+        "unactiveAmount": "",
+        "pendingAmount": "",
+        "withdrawAmmount": "",
+        "updateTime": ""
+    }
+}
+
+// 订单查询
+GET /v1/orders?sid=xxx
+{
+    "errNo": 0,
+    "errorMsg": "",
+    "data": [{
+        "id": "",
+        "srcType": "",
+        "status": "",
+        "orderAmount": "",
+        "productAmount": "",
+        "rebateAmount": "",
+        "rebateType": "",
+        "rebateStatus": "",
+        "receiveDate": "",
+        "createTime": "",
+        "updateTime": ""
+    }]
+}
+
+// 提现/兑换记录
+GET /v1/balances/withdraw/:installId
+{
+    "errNo": 0,
+    "errorMsg": "",
+    "data": [{
+        "id": "",
+    }]
+}
+
+// 发起提现
+PUT /v1/balances/withdraw?sid=xxx
+{
+    "errNo": 0,
+    "errorMsg": "",
+    "data": [{
+        "id": "",
+    }]
+}
+
+
+// 埋点
+    v  版本号（产品的版本）
+    t  button button，a  a标签
+   dl 当前URL
+   dr Referer
+   dt 当前Title
+   aid：ADKD_版本_序列号 (此处的版本是统计方法的版本)
+   c: 内容值
