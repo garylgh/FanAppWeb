@@ -8,14 +8,14 @@ function Logo({ brand }) {
     return (
         <section className="w-section logo-section">
             <div className="logo-bg">
-                <img src={brand.image} width="100%" height="180px" alt="" />
+                <img src={brand.bigPic} alt="" />
             </div>
             <div className="small-logo">
                 <a href="">
-                    <img src={brand.logo} width="80px" height="80px" alt="" />
+                    <img src={brand.logoPic} width="80px" height="80px" alt="" />
                 </a>
             </div>
-            <p className="brand-name">{brand.title}</p>
+            <p className="brand-name">{brand.name}</p>
         </section>
     );
 }

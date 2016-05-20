@@ -1,7 +1,7 @@
 html, body {
     -webkit-user-select: none;   /* 禁止选中文本（如无文本选中需求，此为必选项） */
     user-select: none;
-    font-size: 18px;
+    font-size: 100%;
     margin: 0;
     padding: 0;
 
@@ -20,7 +20,7 @@ ul,li {
     padding: 0;
 }
 
-.container {
+.lcontainer {
     position: relative;
     width: 100%;
     overflow-x: hidden;
@@ -33,15 +33,15 @@ ul,li {
   display: flex;
 }
 
-div {
-    font-size: 12px; // 默认写上dpr为1的fontSize
+div,p,span {
+    font-size: 16px; // 默认写上dpr为1的fontSize
 }
 
-[data-dpr="2"] div {
+[data-dpr="2"] div,p,span {
     font-size: 24px;
 }
 
-[data-dpr="3"] div {
+[data-dpr="3"] div,p,span {
     font-size: 36px;
 }
 

@@ -1,10 +1,10 @@
 import $ from '../../node_modules/jquery/dist/jquery.min.js';
 
-export const FETCH_PRODUCTS_SUCCESS = 'FETCH_PRODUCTS_SUCCESS';
+export const FETCH_REBATES_SUCCESS = 'FETCH_REBATES_SUCCESS';
 
 function receiveRebates(cateId, currPage, products) {
     return {
-        type: FETCH_PRODUCTS_SUCCESS,
+        type: FETCH_REBATES_SUCCESS,
         cateId,
         products,
         currPage,
@@ -15,15 +15,16 @@ export function loadRebates(cateId, currPage) {
     const p = currPage || 1; // 如果没有页码就是默认第一页
     return (dispatch, getState) => {
         $.ajax({
-            url: '/fanliba/v1/products',
+            url: '/v1/rebates',
             data: {
                 cateId,
                 p,
+                ts: new Date().getTime(),
             },
             dataType: 'JSON',
         })
         .done(data => {
-            dispatch(receiveRebates(cateId, p, data.data.list_product));
+            dispatch(receiveRebates(cateId, p, data.data.list));
         })
         .fail(() => {
             dispatch(receiveRebates(cateId, p, []));
@@ -78,5 +79,14 @@ export function changeCate(cateId) {
         if (shouldFetchRebates(getState(), cateId, 1)) { // 每次切换就到第一页去
             return dispatch(loadRebates(cateId));
         }
+    };
+}
+
+export const MOVE_CATE = 'MOVE_CATE';
+export function moveCate(isMoving, navLeft) {
+    return {
+        type: MOVE_CATE,
+        isMoving,
+        navLeft,
     };
 }

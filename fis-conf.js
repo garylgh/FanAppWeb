@@ -10,45 +10,58 @@ fis.set('project.files', ['!dep/**', '!node_modules/**', '!startbootstrap-sb-adm
 fis.hook('commonjs', {
     // 参考 http://imweb.io/topic/565c548a3ad940357eb99874
 	paths: {
-		react: './node_modules/react/dist/react.min.js',
-		'react-dom': './node_modules/react-dom/dist/react-dom.min.js',
+		react: './node_modules/react/dist/react-with-addons.js',
+		'react-dom': './node_modules/react-dom/dist/react-dom.js',
 		'react-redux': './node_modules/react-redux/dist/react-redux.min.js',
 		'redux': './node_modules/redux/dist/redux.min.js',
-		'react-router': './node_modules/react-router/umd/ReactRouter.min.js',
+		'react-router': './node_modules/react-router/umd/ReactRouter.js',
 		'redux-thunk': './node_modules/redux-thunk/dist/redux-thunk.min.js',
-		'redux-logger': './node_modules/redux-logger/dist/index.min.js'
+		'redux-logger': './node_modules/redux-logger/dist/index.min.js',
+		'amazeui-touch': './node_modules/amazeui-touch/dist/amazeui.touch.js',
+		// 对ReactCSSTransitionGroup进行包装，给amazeui-touch的require使用
+		'react-addons-css-transition-group': './app/wrap/WrapReactCSSTransition.js'
 	}
 });
 
 /******************** 语言编译 ********************/
-fis
-.match('./node_modules/react/dist/react.min.js', {
-	isMod: true,
-	moduleId: 'react'  // 为utils设置一个moduleId，希望以后能直接require('react')
-})
-.match('./node_modules/react-dom/dist/react-dom.min.js', {
-	isMod: true,
-	moduleId: 'react-dom'  // 为utils设置一个moduleId，希望以后能直接require('react-dom')
-})
-.match('./node_modules/react-redux/dist/react-redux.min.js', {
-	isMod: true,
-	moduleId: 'react-redux'  // 为utils设置一个moduleId，希望以后能直接require('react-redux')
-})
-.match('./node_modules/redux/dist/redux.min.js', {
-	isMod: true,
-	moduleId: 'redux'  // 为utils设置一个moduleId，希望以后能直接require('react-redux')
-})
-.match('./node_modules/react-router/umd/ReactRouter.min.js', {
-	isMod: true,
-	moduleId: 'react-router'  // 为utils设置一个moduleId，希望以后能直接require('react-redux')
-})
-.match('./node_modules/redux-thunk/dist/redux-thunk.min.js', {
-	isMod: true,
-	moduleId: 'redux-thunk'  // 为utils设置一个moduleId，希望以后能直接require('react-redux')
-})
-.match('./node_modules/redux-logger/dist/index.min.js', {
-	isMod: true,
-	moduleId: 'redux-logger'  // 为utils设置一个moduleId，希望以后能直接require('react-redux')
+// fis
+// .match('./node_modules/react/dist/react-with-addons.js', {
+// 	isMod: true,
+// 	moduleId: 'react'  // 为utils设置一个moduleId，希望以后能直接require('react')
+// })
+// .match('./node_modules/react-dom/dist/react-dom.js', {
+// 	isMod: true,
+// 	moduleId: 'react-dom'  // 为utils设置一个moduleId，希望以后能直接require('react-dom')
+// })
+// .match('./node_modules/react-redux/dist/react-redux.min.js', {
+// 	isMod: true,
+// 	moduleId: 'react-redux'  // 为utils设置一个moduleId，希望以后能直接require('react-redux')
+// })
+// .match('./node_modules/redux/dist/redux.min.js', {
+// 	isMod: true,
+// 	moduleId: 'redux'  // 为utils设置一个moduleId，希望以后能直接require('react-redux')
+// })
+// .match('./node_modules/react-router/umd/ReactRouter.js', {
+// 	isMod: true,
+// 	moduleId: 'react-router'  // 为utils设置一个moduleId，希望以后能直接require('react-redux')
+// })
+// .match('./node_modules/redux-thunk/dist/redux-thunk.min.js', {
+// 	isMod: true,
+// 	moduleId: 'redux-thunk'  // 为utils设置一个moduleId，希望以后能直接require('react-redux')
+// })
+// .match('./node_modules/redux-logger/dist/index.min.js', {
+// 	isMod: true,
+// 	moduleId: 'redux-logger'  // 为utils设置一个moduleId，希望以后能直接require('react-redux')
+// })
+// .match('./node_modules/amazeui-touch/dist/amazeui.touch.js', {
+// 	isMod: true,
+// 	moduleId: 'amazeui-touch'  // 为utils设置一个moduleId，希望以后能直接require('react-redux')
+// });
+
+// 包装node_modules依赖的包
+fis.match('/{node_modules}/**.js', {
+    isMod: true,
+    useSameNameRequire: true
 });
 
 /*支持react*/
@@ -183,11 +196,11 @@ fis.match('::package', {
 	packager: fis.plugin('map', {
         'pkg/vendor.js': [
             'dep/mod.js',
-            'node_modules/**/react.min.js',
-            'node_modules/**/react-dom.min.js',
-			'node_modules/react-redux/**/react-redux.min.js',
-			'node_modules/redux/**/redux.min.js',
-			'node_modules/react-router/umd/ReactRouter.min.js'
+            'node_modules/**/react-with-addons.js',
+            'node_modules/**/react-dom.js',
+			// 'node_modules/redux/**/redux.min.js',
+			// 'node_modules/react-redux/**/react-redux.min.js',
+			// 'node_modules/react-router/umd/ReactRouter.js'
         ]
     })
 });

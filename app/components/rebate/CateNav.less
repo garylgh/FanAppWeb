@@ -6,6 +6,7 @@
     float: left;
     width: 8.75rem;
     ul {
+        position: relative;
         margin: 0 0.2rem;
         height: 1.25rem;
         li {
@@ -26,12 +27,14 @@
     height: 100%;
     float: right;
     background: #fff;
+    // 防止ul transform时index失效
     .arrow {
+        position: relative;
         display: block;
         line-height: 1.25rem;
         text-align: center;
         border-left: 1px solid #f1f1f1;
-        background: url(../../../static/img/arrow-48.png) center center no-repeat;
+        background: #fff url(../../../static/img/arrow-48.png) center center no-repeat;
         transition: 0.3s all;
     }
     &.active {

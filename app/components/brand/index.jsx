@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react';
 import Logo from './Logo.jsx';
 import ProductList from '../rebate/ProductList.jsx';
-import { connect } from 'react-redux';
 
 class Brand extends React.Component {
 	render() {
@@ -9,7 +8,9 @@ class Brand extends React.Component {
 		return (
 			<div>
 				<Logo brand={brand} />
-				<ProductList products={products} />
+				<div className="brand">
+					<ProductList products={products} />
+				</div>
 			</div>
 		);
 	}
@@ -20,8 +21,4 @@ Brand.propTypes = {
 	products: PropTypes.array.isRequired,
 };
 
-function mapStateToProps(state) {
-	return { brand: state.brands.brand, products: state.brands.list };
-}
-
-export default connect(mapStateToProps)(Brand);
+export default Brand;

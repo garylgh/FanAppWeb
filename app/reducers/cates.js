@@ -2,14 +2,18 @@ import {
 	TOGGLE_DROPDOWN,
 	HIDE_DROPDOWN,
     CHANGE_CATE,
-} from '../actions';
+	MOVE_CATE,
+} from '../actions/rebate.js';
 
 const initialState = {
 	activeCate: '0',
 	categories: [],
 };
 
-export function cates(state, action) {
+export function cates(state = {
+	isMoving: false,
+	left: 0,
+}, action) {
 	if (typeof state === 'undefined') {
 		return initialState;
 	}
@@ -18,6 +22,11 @@ export function cates(state, action) {
             return Object.assign({}, state, {
                 activeCate: action.cateId,
             });
+		case MOVE_CATE:
+			return Object.assign({}, state, {
+				isMoving: action.isMoving,
+				navLeft: action.navLeft,
+			})
         default:
             return state;
     }

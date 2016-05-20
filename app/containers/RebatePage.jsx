@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import CateNav from '../components/rebate/CateNav.jsx';
 import ProductList from '../components/rebate/ProductList.jsx';
-import { fetchRebatesIfNeeded, toggleDropdown, changeCate } from '../actions';
+import { fetchRebatesIfNeeded, toggleDropdown, changeCate, moveCate } from '../actions/rebate.js';
 
 function loadData(props) {
 	props.fetchRebatesIfNeeded(props.activeCate, props.pagination[props.activeCate]);
@@ -16,6 +16,7 @@ class RebatePage extends Component {
 	constructor(props) {
 		super(props);
 		this.handleCateClick = this.handleCateClick.bind(this);
+		this.handleCateMove = this.handleCateMove.bind(this);
 	}
 	componentWillMount() {
 		loadData(this.props);
@@ -24,8 +25,11 @@ class RebatePage extends Component {
 	handleCateClick(cateId) {
 		this.props.changeCate(cateId);
 	}
+	handleCateMove(navLeft) {
+		this.props.moveCate(true, navLeft);
+	}
 	render() {
-		const { toggleDropdown, visibilityDropdown, activeCate, categories, products } = this.props;
+		const { toggleDropdown, navLeft, visibilityDropdown, activeCate, categories, products } = this.props;
 		let activeProducts = products[activeCate] || [];
 		return (
 			<div>
@@ -34,6 +38,8 @@ class RebatePage extends Component {
 					categories={categories}
 					visibilityDropdown={visibilityDropdown}
 					toggleDD={toggleDropdown}
+					navLeft={navLeft}
+					onCateMove={this.handleCateMove}
 					onCateClick={this.handleCateClick}
 				/>
 				<ProductList products={activeProducts} />
@@ -48,6 +54,7 @@ RebatePage.propTypes = {
 	activeCate: PropTypes.string.isRequired,
 	categories: PropTypes.array.isRequired,
 	products: PropTypes.array.isRequired,
+	navLeft: PropTypes.number.isRequired,
 };
 
 function mapStateToProps(state) {
@@ -56,13 +63,14 @@ function mapStateToProps(state) {
 		visibilityDropdown,
 		activeCate: cates.activeCate,
 		categories: cates.categories,
+		navLeft: cates.navLeft,
 		products,
 		pagination,
 	};
 }
 
 function mapDispatchToProps(dispatch) {
-	return bindActionCreators({ fetchRebatesIfNeeded, toggleDropdown, changeCate }, dispatch);
+	return bindActionCreators({ fetchRebatesIfNeeded, toggleDropdown, changeCate, moveCate }, dispatch);
 }
 
 // connect() 的唯一参数是 selector。
