@@ -5,8 +5,8 @@ import CateNav from '../components/rebate/CateNav.jsx';
 import ProductList from '../components/rebate/ProductList.jsx';
 import { fetchRebatesIfNeeded, toggleDropdown, changeCate, moveCate } from '../actions/rebate.js';
 
-function loadData(props) {
-	props.fetchRebatesIfNeeded(props.activeCate, props.pagination[props.activeCate]);
+function loadData(props, page) {
+	props.fetchRebatesIfNeeded(props.activeCate, page);
 }
 
 // 任何一个从 connect() 包装好的组件都可以得到一个 dispatch 方法作为组件的 props，
@@ -17,9 +17,10 @@ class RebatePage extends Component {
 		super(props);
 		this.handleCateClick = this.handleCateClick.bind(this);
 		this.handleCateMove = this.handleCateMove.bind(this);
+		this.handleScroll = this.handleScroll.bind(this);
 	}
 	componentWillMount() {
-		loadData(this.props);
+		loadData(this.props, this.props.pagination[this.props.activeCate]);
 	}
 	// 点击cate事件
 	handleCateClick(cateId) {
@@ -27,6 +28,23 @@ class RebatePage extends Component {
 	}
 	handleCateMove(navLeft) {
 		this.props.moveCate(true, navLeft);
+	}
+	handleScroll(e) {
+		let threshold = 300;
+        let scrollTop = document.body.scrollTop;
+        let winHeight = window.innerHeight;
+        let scrollHeight = document.documentElement.scrollHeight;
+        // 判断isLoading状态，
+        if (!this.props.products.isLoading && (scrollHeight - winHeight - scrollTop) <= threshold) {
+			let currPage = this.props.pagination[this.props.activeCate];
+			loadData(this.props, currPage ? (currPage + 1) : 1);
+        }
+    }
+	componentDidMount() {
+		window.addEventListener('scroll', this.handleScroll);
+	}
+	componentWillUnmount() {
+		window.removeEventListener('scroll', this.handleScroll);
 	}
 	render() {
 		const { toggleDropdown, navLeft, visibilityDropdown, activeCate, categories, products } = this.props;

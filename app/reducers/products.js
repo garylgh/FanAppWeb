@@ -1,5 +1,6 @@
 import {
 	FETCH_REBATES_SUCCESS,
+	FETCH_REBATES_REQUEST,
 } from '../actions/rebate.js';
 
 function products(state = {}, action) {
@@ -13,6 +14,11 @@ function products(state = {}, action) {
 		}
 		return Object.assign({}, state, {
 			[action.cateId]: newProducts,
+		});
+	case FETCH_REBATES_REQUEST:
+	console.log('action.isLoading = ' + action.isLoading);
+		return Object.assign({}, state, {
+			isLoading: action.isLoading,
 		});
 	default:
 		return state;

@@ -1,0 +1,22 @@
+{
+    "err_no": 0,
+    "err_msg": "",
+    "data": {
+        "list":[{
+            "iid": "123123",
+            "srcType": "1",
+            "status": "1",
+            "orderAmount": "123",
+            "productAmount": "123",
+            "rebateAmount": "423",
+            "rebateType": "2",
+            "rebateStatus": "4",
+            "receiveDate": "2015-11-20",
+            "createTime": "2015-11-20",
+            "updateTime": "2015-11-20"
+        }],
+        "next": "1",
+        "total": "1",
+        "pages": "1"
+    }
+}

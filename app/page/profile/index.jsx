@@ -1,6 +1,3 @@
-/**
- * @require ../../../node_modules/amazeui-touch/dist/amazeui.touch.css
- */
 // main.js
 import React from 'react';
 import { render } from 'react-dom';
@@ -12,9 +9,6 @@ import configureStore from '../../stores/configureStore';
 
 import Account from '../../components/user-center/Account.js';
 import Detail from '../../components/user-center/Detail.js';
-
-// 为了使触摸事件生效，在渲染所有组件之前调用
-// React.initializeTouchEvents(true);
 
 // 从后端（smart）获取初始的状态
 const store = configureStore(profileReducer);

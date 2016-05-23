@@ -8,23 +8,29 @@ import {
 } from 'amazeui-touch';
 import { Link } from 'react-router';
 
-function backLink() {
-    return (
-        <Link>This is haha!</Link>
-    )
-}
+import Components from './sub-detail';
+
+const NotFound = React.createClass({
+	render() {
+		return (
+			<Group header="404">
+				<h2>Not found.</h2>
+			</Group>
+		);
+	}
+});
 
 class Detail extends Component {
 	render() {
+		const { dispatch, account, orders } = this.props;
 		let component = this.props.params.component;
 
-		console.log('component = ' + component);
-		//
-		// if (component) {
-		// 	component = component.charAt(0).toUpperCase() + component.slice(1);
-		// }
-		//
-		// let Component = Components[component] || NotFound;
+		if (component) {
+			component = component.charAt(0).toUpperCase() + component.slice(1);
+		}
+
+		let Component = Components[component] || NotFound;
+		let componentTitle = Components[`${component}Name`];
 		let backNav = {
 			component: Link,
 			icon: 'left-nav',
@@ -34,12 +40,12 @@ class Detail extends Component {
 
 		return (
 			<View id="sk-detail">
-				haha
 				<NavBar
-					title="aaaa"
+					title={componentTitle}
 					leftNav={[backNav]}
 					amStyle="primary"
 				/>
+			<Component scrollable dispatch={dispatch} account={account} orders={orders} className="sk-demos" />
 			</View>
 		);
 	}

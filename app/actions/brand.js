@@ -11,9 +11,18 @@ function receiveProducts(currPage, brand, products) {
     };
 }
 
+export const FETCH_PRODUCT_REQUSET = 'FETCH_PRODUCT_REQUSET';
+function requestProduct(isLoading) {
+    return {
+        type: FETCH_PRODUCT_REQUSET,
+        isLoading,
+    }
+}
+
 export function loadProducts(brandId, currPage) {
     const p = currPage || 1; // 如果没有页码就是默认第一页
     return (dispatch, getState) => {
+        dispatch(requestProduct(true));
         $.ajax({
             url: '/v1/products',
             data: {
@@ -23,9 +32,11 @@ export function loadProducts(brandId, currPage) {
             dataType: 'JSON',
         })
         .done(data => {
+            dispatch(requestProduct(false));
             dispatch(receiveProducts(p, data.data.obj, data.data.list));
         })
         .fail(() => {
+            dispatch(requestProduct(false));
             dispatch(receiveProducts(p, {}, []));
         });
     };

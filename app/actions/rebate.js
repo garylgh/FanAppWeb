@@ -11,9 +11,18 @@ function receiveRebates(cateId, currPage, products) {
     };
 }
 
+export const FETCH_REBATES_REQUEST = 'FETCH_REBATES_REQUEST';
+function requstRebates(isLoading) {
+    return {
+        type: FETCH_REBATES_REQUEST,
+        isLoading,
+    }
+}
+
 export function loadRebates(cateId, currPage) {
     const p = currPage || 1; // 如果没有页码就是默认第一页
     return (dispatch, getState) => {
+        dispatch(requstRebates(true));
         $.ajax({
             url: '/v1/rebates',
             data: {
@@ -25,19 +34,21 @@ export function loadRebates(cateId, currPage) {
         })
         .done(data => {
             dispatch(receiveRebates(cateId, p, data.data.list));
+            dispatch(requstRebates(false));
         })
         .fail(() => {
             dispatch(receiveRebates(cateId, p, []));
+            dispatch(requstRebates(false));
         });
     };
 }
 
-function shouldFetchRebates(state, cateId, currPage) {
-    const p = state.pagination[cateId];
+function shouldFetchRebates(state, cateId, page) {
+    const currPage = state.pagination[cateId];
     let result = false;
-    if (!p) {
+    if (!currPage) {
         result = true;
-    } else if (p >= currPage) {
+    } else if (currPage >= page) {
         result = false;
     } else {
         result = true;
@@ -46,10 +57,10 @@ function shouldFetchRebates(state, cateId, currPage) {
     return result;
 }
 
-export function fetchRebatesIfNeeded(cateId, currPage) {
+export function fetchRebatesIfNeeded(cateId, page) {
     return (dispatch, getState) => {
-        if (shouldFetchRebates(getState(), cateId, currPage)) {
-            return dispatch(loadRebates(cateId, currPage));
+        if (shouldFetchRebates(getState(), cateId, page)) {
+            return dispatch(loadRebates(cateId, page));
         }
     };
 }

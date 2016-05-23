@@ -1,5 +1,6 @@
 import {
     FETCH_PRODUCT_SUCCESS,
+    FETCH_PRODUCT_REQUSET,
 } from '../actions/brand.js';
 
 export function brand(state = {}, action) {

@@ -23,6 +23,22 @@ fis.hook('commonjs', {
 	}
 });
 
+// 因为官方的babel5进行parse，所以定义自己的插件，使用babel6
+var plugins = {
+	babel: require('./build/fis/parser/babel'),
+};
+
+// 有限制使用本地自定义插件~~
+var plugin = function(name, options) {
+	var localPlugin = plugins[name];
+	if (typeof localPlugin === 'function') {
+		localPlugin.options = options;
+		return localPlugin;
+	} else {
+		return fis.plugin.apply(fis, arguments);
+	}
+};
+
 /******************** 语言编译 ********************/
 // fis
 // .match('./node_modules/react/dist/react-with-addons.js', {
@@ -69,7 +85,14 @@ fis.match('app/**/*.{js, jsx, react.js}', {
     rExt: '.js',
 	isMod: true,
 	// 使用babel支持es6
-  	parser: fis.plugin('babel')
+  	parser: plugin('babel', {
+		// babel options
+		"presets": [
+		    "es2015",
+		    "react"
+		],
+	}),
+ 	// parser: fis.plugin('babel')
 	// 自己的define包装
 	// postprocessor: plugin('define')
 });

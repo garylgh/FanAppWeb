@@ -17,11 +17,12 @@ function loadData(props) {
 
 class ProfilePage extends Component {
     componentWillMount() {
-        loadData(this.props);
+		this.props.dispatch(loadAccount());
+        // loadData(this.props);
     }
     render() {
 		// 此处的children是根据route path确定的对应的component
-        const { children, account } = this.props;
+        const { dispatch, children, account, orders } = this.props;
 		let transition = 'sfr';
 		if (!account.userInfo) {
 			return (<h2>Loading</h2>)
@@ -30,7 +31,7 @@ class ProfilePage extends Component {
         return (
 			<Container direction="column" id="sk-container">
 				<Container transition={transition}>
-					{ React.cloneElement(children, {account,}) }
+					{ React.cloneElement(children, {account, orders, dispatch}) }
 				</Container>
 			</Container>
         );
@@ -38,9 +39,10 @@ class ProfilePage extends Component {
 }
 
 function mapStateToProps(state) {
-    const { account } = state;
+    const { account, orders } = state;
     return {
         account,
+		orders,
     };
 }
 
@@ -48,4 +50,4 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators({ loadAccount }, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProfilePage);
+export default connect(mapStateToProps)(ProfilePage);

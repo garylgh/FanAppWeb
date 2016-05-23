@@ -11,13 +11,13 @@ function ProfileDetail() {
                 <div className="p-group-body">
                     <ul className="p-list">
                         <li className="p-item">
-                            <Link to="/app/page/profile/withdraw" >
+                            <Link to="/app/page/profile/order" >
                                 <h3 className="item-title">订单查询</h3>
                                 <span className="icon icon-right-nav item-icon"></span>
                             </Link>
                         </li>
                         <li className="p-item">
-                            <a href="#/haha">
+                            <a href="/app/page/profile/withdraw">
                                 <h3 className="item-title">兑换记录</h3>
                                 <span className="icon icon-right-nav item-icon"></span>
                             </a>

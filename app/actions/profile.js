@@ -26,3 +26,29 @@ export function loadAccount(sid) {
         });
     };
 }
+
+export const FETCH_ORDER_SUCCESS = 'FETCH_ORDER_SUCCESS';
+function receiveOrders(orders) {
+    return {
+        type: FETCH_ORDER_SUCCESS,
+        orders,
+    };
+}
+
+export function loadOrders(sid) {
+    return (dispatch, getState) => {
+        $.ajax({
+            url: '/v1/orders',
+            data: {
+                sid,
+            },
+            dataType: 'JSON',
+        })
+        .done(data => {
+            dispatch(receiveOrders(data.data.list));
+        })
+        .fail(() => {
+            dispatch(receiveOrders([]));
+        });
+    };
+}
