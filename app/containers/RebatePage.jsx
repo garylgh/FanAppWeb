@@ -23,7 +23,9 @@ class RebatePage extends Component {
 		loadData(this.props, this.props.pagination[this.props.activeCate]);
 	}
 	// 点击cate事件
-	handleCateClick(cateId) {
+	handleCateClick(cateId, navLeft) {
+		// TODO move cate
+		this.props.moveCate(true, navLeft);
 		this.props.changeCate(cateId);
 	}
 	handleCateMove(navLeft) {
@@ -71,7 +73,7 @@ RebatePage.propTypes = {
 	dispatch: PropTypes.func,
 	activeCate: PropTypes.string.isRequired,
 	categories: PropTypes.array.isRequired,
-	products: PropTypes.array.isRequired,
+	products: PropTypes.object.isRequired,
 	navLeft: PropTypes.number.isRequired,
 };
 

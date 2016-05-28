@@ -24,7 +24,7 @@ export function loadRebates(cateId, currPage) {
     return (dispatch, getState) => {
         dispatch(requstRebates(true));
         $.ajax({
-            url: '/v1/rebates',
+            url: '/fanliba/v1/rebates',
             data: {
                 cateId,
                 p,

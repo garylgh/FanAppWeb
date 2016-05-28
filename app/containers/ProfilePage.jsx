@@ -11,14 +11,9 @@ import {
 	View,
 } from 'amazeui-touch';
 
-function loadData(props) {
-	props.loadAccount();
-}
-
 class ProfilePage extends Component {
     componentWillMount() {
-		this.props.dispatch(loadAccount());
-        // loadData(this.props);
+		this.props.dispatch(loadAccount(12));
     }
     render() {
 		// 此处的children是根据route path确定的对应的component

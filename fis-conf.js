@@ -6,24 +6,29 @@ var releaseMods = 'all';
 //dep文件夹为bower的下载目录，有大量的冗余资源，可能导致编译失败。
 //因此编译时屏蔽该目录，但是会自动找出其中被引用的资源。
 fis.set('project.files', ['!dep/**', '!node_modules/**', '!startbootstrap-sb-admin-1.0.4/**', '!inspinia_admin-v2.4/**']);
+fis.set('qa-upload', 'http://121.40.23.136:8085/bkmis/tools/deploy');
+fis.set('qa-template', '/home/ifangy_qa/odp/template/fanliba');
+fis.set('qa-static', '/home/ifangy_qa/odp/webroot/static/fanliba');
+fis.set('qa-domain', 'http://121.40.23.136:8085/static/fanliba');
+
 
 fis.hook('commonjs', {
     // 参考 http://imweb.io/topic/565c548a3ad940357eb99874
 	paths: {
 		react: './node_modules/react/dist/react-with-addons.js',
-		'react-dom': './node_modules/react-dom/dist/react-dom.js',
+		'react-dom': './node_modules/react-dom/dist/react-dom.min.js',
 		'react-redux': './node_modules/react-redux/dist/react-redux.min.js',
 		'redux': './node_modules/redux/dist/redux.min.js',
-		'react-router': './node_modules/react-router/umd/ReactRouter.js',
+		'react-router': './node_modules/react-router/umd/ReactRouter.min.js',
 		'redux-thunk': './node_modules/redux-thunk/dist/redux-thunk.min.js',
 		'redux-logger': './node_modules/redux-logger/dist/index.min.js',
-		'amazeui-touch': './node_modules/amazeui-touch/dist/amazeui.touch.js',
+		'amazeui-touch': './node_modules/amazeui-touch/dist/amazeui.touch.min.js',
 		// 对ReactCSSTransitionGroup进行包装，给amazeui-touch的require使用
 		'react-addons-css-transition-group': './app/wrap/WrapReactCSSTransition.js'
 	}
 });
 
-// 因为官方的babel5进行parse，所以定义自己的插件，使用babel6
+// 因为官方使用babel5进行parse，所以定义自己的插件，使用babel6
 var plugins = {
 	babel: require('./build/fis/parser/babel'),
 };
@@ -40,62 +45,37 @@ var plugin = function(name, options) {
 };
 
 /******************** 语言编译 ********************/
-// fis
-// .match('./node_modules/react/dist/react-with-addons.js', {
-// 	isMod: true,
-// 	moduleId: 'react'  // 为utils设置一个moduleId，希望以后能直接require('react')
-// })
-// .match('./node_modules/react-dom/dist/react-dom.js', {
-// 	isMod: true,
-// 	moduleId: 'react-dom'  // 为utils设置一个moduleId，希望以后能直接require('react-dom')
-// })
-// .match('./node_modules/react-redux/dist/react-redux.min.js', {
-// 	isMod: true,
-// 	moduleId: 'react-redux'  // 为utils设置一个moduleId，希望以后能直接require('react-redux')
-// })
-// .match('./node_modules/redux/dist/redux.min.js', {
-// 	isMod: true,
-// 	moduleId: 'redux'  // 为utils设置一个moduleId，希望以后能直接require('react-redux')
-// })
-// .match('./node_modules/react-router/umd/ReactRouter.js', {
-// 	isMod: true,
-// 	moduleId: 'react-router'  // 为utils设置一个moduleId，希望以后能直接require('react-redux')
-// })
-// .match('./node_modules/redux-thunk/dist/redux-thunk.min.js', {
-// 	isMod: true,
-// 	moduleId: 'redux-thunk'  // 为utils设置一个moduleId，希望以后能直接require('react-redux')
-// })
-// .match('./node_modules/redux-logger/dist/index.min.js', {
-// 	isMod: true,
-// 	moduleId: 'redux-logger'  // 为utils设置一个moduleId，希望以后能直接require('react-redux')
-// })
-// .match('./node_modules/amazeui-touch/dist/amazeui.touch.js', {
-// 	isMod: true,
-// 	moduleId: 'amazeui-touch'  // 为utils设置一个moduleId，希望以后能直接require('react-redux')
-// });
-
-// 包装node_modules依赖的包
-fis.match('/{node_modules}/**.js', {
-    isMod: true,
-    useSameNameRequire: true
-});
-
-/*支持react*/
-fis.match('app/**/*.{js, jsx, react.js}', {
+fis.match('{node_modules,dep}/**/**.js', {
+	isMod: true,
+	useSameNameRequire: true
+}).match('dep/lib-flexible/**.js', {
+	isMod: false
+}).match('**/{widgets,modules,components,page,common,mock}/**.js', {
+    isMod: true
+}).match('app/**/*.{js, jsx, react.js}', {
     rExt: '.js',
 	isMod: true,
 	// 使用babel支持es6
   	parser: plugin('babel', {
-		// babel options
 		"presets": [
 		    "es2015",
 		    "react"
 		],
+		"plugins": ["transform-object-rest-spread", "transform-object-assign"]
 	}),
- 	// parser: fis.plugin('babel')
-	// 自己的define包装
-	// postprocessor: plugin('define')
+	// 开发阶段不需要压缩
+	// optimizer: fis.plugin('uglify-js', {
+    //     mangle: {
+    //         except: 'exports, module, require, define'
+    //     }
+    // }),
 });
+
+// 在页面的script标签指明是data-loader，所以不需要此处配置了
+// fis.match('{mod}.js', {
+//     isMod: false,
+// 	packOrder: -1 //packOrder 控制文件的合并顺序，默认为0，值越小则顺序越靠前，可为负数
+// });
 
 fis.match('*.html', {
     lint: fis.plugin('html')
@@ -132,27 +112,6 @@ fis.match('*.less', {
     parser: fis.plugin('less'),
     rExt: '.css'
 });
-
-//widgets,modules,components和page文件夹下的js文件被认为是模块
-//编译时可以自动包裹factory函数：define(function(require, exports, module) {})
-fis.match('**/{widgets,modules,components,page,common,mock}/**.js', {
-    isMod: true
-});
-
-fis.match('{node_modules,dep}/**/**.js', {
-    isMod: true
-});
-
-// 因为jquery几乎每个页面都要require，所以直接在页面引用
-fis.match('dep/lib-flexible/**.js', {
-    isMod: false
-});
-
-// 在页面的script标签指明是data-loader，所以不需要此处配置了
-// fis.match('{mod}.js', {
-//     isMod: false,
-// 	packOrder: -1 //packOrder 控制文件的合并顺序，默认为0，值越小则顺序越靠前，可为负数
-// });
 
 fis.match('**/*', {
     useCache: false,
@@ -214,16 +173,18 @@ fis.match('::package', {
     postpackager: fis.plugin('loader', {
         resourceType: 'mod',
         useInlineMap: true,
-		// allInOne: true
+		// allInOne: true,
     }),
 	packager: fis.plugin('map', {
         'pkg/vendor.js': [
             'dep/mod.js',
             'node_modules/**/react-with-addons.js',
-            'node_modules/**/react-dom.js',
-			// 'node_modules/redux/**/redux.min.js',
-			// 'node_modules/react-redux/**/react-redux.min.js',
-			// 'node_modules/react-router/umd/ReactRouter.js'
+            'node_modules/**/react-dom.min.js',
+			'node_modules/redux/**/redux.min.js',
+			'node_modules/react-redux/**/react-redux.min.js',
+			'node_modules/react-router/umd/ReactRouter.min.js',
+			'node_modules/redux-thunk/dist/redux-thunk.min.js',
+			'node_modules/redux-logger/dist/index.min.js',
         ]
     })
 });
@@ -232,11 +193,6 @@ fis.match('::package', {
 
 
 /******************** qa start ********************/
-
-//inspinia不需要发布。
-// fis.media('qa').match('/dep/inspinia2.4/{img,fonts,emial_templates}/**', {
-//     release: false
-// });
 
 fis.media('qa').match('*.{less,css,js}', {
     useHash: true
@@ -267,33 +223,38 @@ fis.media('qa').match('server.conf', {
     release: false
 });
 
-fis.media('qa').match('::package', {
-    spriter: fis.plugin('csssprites'),
-    postpackager: fis.plugin('loader', {
-        resourceType: 'mod',
-        useInlineMap: true,
-        allInOne: true
-    })
-});
-
 fis.media('qa').match('**/*', {
-    // domain: "http://pstatic.lagou.com/www"
-    domain: "http://223.4.177.139:8085/static/bkmis"
+    domain: fis.get('qa-domain')
 });
 
+// 默认的静态文件（img/css/js）deploy
+// html文件由各模块的fis-conf.js配置发布到对应的template文件夹
 fis.media('qa').match('*', {
     deploy: fis.plugin('http-push', {
-        receiver: 'http://223.4.177.139:8085/adsys/tools/deploy',
-        to: '/home/ifangy_qa/odp/webroot/static/bkmis'
+        // receiver: 'http://121.40.23.136:8085/adsys/tools/deploy',
+        // to: '/home/ifangy_qa/odp/webroot/static/bkmis'
+        receiver: fis.get('qa-upload'),
+        to: fis.get('qa-static')
     })
 });
 
 fis.media('qa').match('::package', {
-    packager: fis.plugin('map', {
+	spriter: fis.plugin('csssprites'),
+	postpackager: fis.plugin('loader', {
+        resourceType: 'mod',
+        useInlineMap: true,
+		// allInOne: true
+    }),
+	packager: fis.plugin('map', {
         'pkg/vendor.js': [
-            'common/**/mod.js',
-            'node_modules/**/jquery.min.js',
-            'node_modules/**/bootstrap.min.js'
+            'dep/mod.js',
+            'node_modules/**/react-with-addons.js',
+            'node_modules/**/react-dom.min.js',
+			'node_modules/redux/**/redux.min.js',
+			'node_modules/react-redux/**/react-redux.min.js',
+			'node_modules/react-router/umd/ReactRouter.min.js',
+			'node_modules/redux-thunk/dist/redux-thunk.min.js',
+			'node_modules/redux-logger/dist/index.min.js',
         ]
     })
 });
@@ -366,11 +327,21 @@ fis.media('prod').match('*', {
 });
 
 fis.media('prod').match('::package', {
-    packager: fis.plugin('map', {
+	postpackager: fis.plugin('loader', {
+        resourceType: 'mod',
+        useInlineMap: true,
+		allInOne: true
+    }),
+	packager: fis.plugin('map', {
         'pkg/vendor.js': [
-            'common/**/mod.js',
-            'node_modules/**/jquery.min.js',
-            'node_modules/**/bootstrap.min.js'
+            'dep/mod.js',
+            'node_modules/**/react-with-addons.js',
+            'node_modules/**/react-dom.min.js',
+			'node_modules/redux/**/redux.min.js',
+			'node_modules/react-redux/**/react-redux.min.js',
+			'node_modules/react-router/umd/ReactRouter.min.js',
+			'node_modules/redux-thunk/dist/redux-thunk.min.js',
+			'node_modules/redux-logger/dist/index.min.js',
         ]
     })
 });

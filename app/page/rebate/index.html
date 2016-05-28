@@ -2,7 +2,12 @@
 <html>
     <head>
         <link rel="import" href="../../../widgets/common/base-head.html?__inline" >
-        <title>Message</title>
+        <title>首页</title>
+        <script data-loader type="text/javascript">
+            if (!window.CATE_DATA) {
+                window.CATE_DATA = {%$data%};
+            }
+        </script>
     </head>
     <body>
 		<div class="lcontainer clearfix" id="example">

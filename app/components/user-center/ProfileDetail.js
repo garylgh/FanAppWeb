@@ -11,22 +11,22 @@ function ProfileDetail() {
                 <div className="p-group-body">
                     <ul className="p-list">
                         <li className="p-item">
-                            <Link to="/app/page/profile/order" >
+                            <Link to="order" >
                                 <h3 className="item-title">订单查询</h3>
                                 <span className="icon icon-right-nav item-icon"></span>
                             </Link>
                         </li>
                         <li className="p-item">
-                            <a href="/app/page/profile/withdraw">
+                            <Link to="withdraw">
                                 <h3 className="item-title">兑换记录</h3>
                                 <span className="icon icon-right-nav item-icon"></span>
-                            </a>
+                            </Link>
                         </li>
                         <li className="p-item">
-                            <a href="#/haha">
+                            <Link to="haha">
                                 <h3 className="item-title">账户设置</h3>
                                 <span className="icon icon-right-nav item-icon"></span>
-                            </a>
+                            </Link>
                         </li>
                     </ul>
                 </div>
@@ -35,16 +35,16 @@ function ProfileDetail() {
                 <div className="p-group-body">
                     <ul className="p-list">
                         <li className="p-item">
-                            <a href="#/accordion">
+                            <Link to="accordion">
                                 <h3 className="item-title">常见问题</h3>
                                 <span className="icon icon-right-nav item-icon"></span>
-                            </a>
+                            </Link>
                         </li>
                         <li className="p-item">
-                            <a href="#/accordion">
+                            <Link to="accordion">
                                 <h3 className="item-title">联系客服</h3>
                                 <span className="icon icon-right-nav item-icon"></span>
-                            </a>
+                            </Link>
                         </li>
                     </ul>
                 </div>

@@ -24,7 +24,7 @@ export function loadProducts(brandId, currPage) {
     return (dispatch, getState) => {
         dispatch(requestProduct(true));
         $.ajax({
-            url: '/v1/products',
+            url: '/fanliba/v1/products',
             data: {
                 brandId,
                 p,

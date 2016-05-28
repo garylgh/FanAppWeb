@@ -15,8 +15,7 @@
         <!-- No Baidu Siteapp-->
         <meta http-equiv="Cache-Control" content="no-siteapp"/>
         <meta name="viewport" content="initial-scale=0.5, maximum-scale=0.5, minimum-scale=0.5, user-scalable=no">
-        <link rel="apple-touch-icon-precomposed"
-        href="http://s.amazeui.org/assets/react/i/app-icon72x72@2x.png">
+        <link rel="apple-touch-icon-precomposed" href="http://s.amazeui.org/assets/react/i/app-icon72x72@2x.png">
         <meta name="apple-mobile-web-app-title" content="AMUI Touch"/>
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -24,6 +23,12 @@
         <link rel="stylesheet" type="text/css" href="../../../node_modules/amazeui-touch/dist/amazeui.touch.css">
         <script src="../../../dep/mod.js" data-loader charset="utf-8"></script>
         <title>个人中心</title>
+        <script type="text/javascript">
+            var params = {%$data%};
+            // if (!window.SID) {
+            //     window.SID = params.sid;
+            // }
+        </script>
     </head>
     <body>
 		<div id="sk-root" style="height: 100%; width: 100%; overflow: hidden;">

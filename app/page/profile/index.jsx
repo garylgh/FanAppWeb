@@ -2,7 +2,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import { Router, Route, IndexRoute, browserHistory } from 'react-router';
+import { Router, Route, IndexRoute, hashHistory } from 'react-router';
 import ProfilePage from '../../containers/ProfilePage.jsx';
 import profileReducer from '../../reducers/ProfileReducer.js';
 import configureStore from '../../stores/configureStore';
@@ -15,9 +15,9 @@ const store = configureStore(profileReducer);
 
 render(
     <Provider store={store}>
-        <Router history={browserHistory}>
-            <Route path="/app/page/profile/" component={ProfilePage}>
-                <Route path="/app/page/profile/:component" component={Detail} />
+        <Router history={hashHistory}>
+            <Route path="/" component={ProfilePage}>
+                <Route path=":component" component={Detail} />
                 <IndexRoute component={Account} />
             </Route>
         </Router>

@@ -2,7 +2,13 @@
 <html>
     <head>
         <link rel="import" href="../../../widgets/common/base-head.html?__inline" >
-        <title>Message</title>
+        <title>品牌</title>
+        <script type="text/javascript">
+            var params = {%$data%}
+            if (!window.BRAND_ID) {
+                window.BRAND_ID = params.brandId;
+            }
+        </script>
     </head>
     <body>
 		<div class="container clearfix" id="example">

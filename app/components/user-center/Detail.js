@@ -35,7 +35,7 @@ class Detail extends Component {
 			component: Link,
 			icon: 'left-nav',
 			title: '返回',
-			to: '/app/page/profile/'
+			to: '/'
 		};
 
 		return (

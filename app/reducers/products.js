@@ -16,7 +16,6 @@ function products(state = {}, action) {
 			[action.cateId]: newProducts,
 		});
 	case FETCH_REBATES_REQUEST:
-	console.log('action.isLoading = ' + action.isLoading);
 		return Object.assign({}, state, {
 			isLoading: action.isLoading,
 		});

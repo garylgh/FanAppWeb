@@ -20,22 +20,23 @@ class CateNav extends Component {
         };
     }
     // 触屏开始
-    handleTouchStart(e){
+    handleTouchStart(e) {
         const event = e || window.event;
         this.moveData.startX = event.touches[0].pageX;
         this.moveData.originLeft = this.props.navLeft;
         this.moveData.width = this.refs.mainNav.offsetWidth;
         this.moveData.parentWidth = this.refs.mainNav.parentNode.offsetWidth;
+        this.moveData.maxLeft = this.moveData.parentWidth - this.moveData.width - 20;
     }
 
     // 触屏滑动
-    handleTouchMove(e){
+    handleTouchMove(e) {
         e.preventDefault();
         const event = e || window.event;
         const nowX = event.touches[0].pageX;
         const offsetX = nowX - this.moveData.startX;
-        const navLeft = this.moveData.originLeft + offsetX;
-        if (navLeft >= ( this.moveData.parentWidth - this.moveData.width ) && navLeft <= 0) { // 左移的极限
+        let navLeft = this.moveData.originLeft + offsetX * 2;
+        if (navLeft >= this.moveData.maxLeft && navLeft <= 0) { // 左移的极限
             this.props.onCateMove(navLeft);
         }
     }
@@ -45,6 +46,15 @@ class CateNav extends Component {
         // this.props.isTouchDown = false;
         this.moveData.startX = 0;
     }
+    calNavleft(liWidth, baseFontsize, index, len) {
+        if (index < 3) { // 前三个不动
+            return 0;
+        } else if (index < len - 1){
+            return -(liWidth * (baseFontsize) * (index - 2));
+        } else { // 最后一个
+            return -(liWidth * (baseFontsize) * (index - 3));
+        }
+    }
     render() {
         const { activeCate, categories, toggleDD, visibilityDropdown, onCateClick, navLeft } = this.props;
         let liWidth = 2.12;
@@ -53,10 +63,18 @@ class CateNav extends Component {
             left: `${navLeft}px`,
             width: `${categories.length * liWidth + 0.5}rem`, // 加0.5的缓冲
         };
-        let cateNodes = categories.map(
-            c => (<Cate activeCate={activeCate} onCateClick={onCateClick} liWidth={liWidth} cate={c} />));
-        let ddCateNodes = categories.map(
-            c => (<Cate activeCate={activeCate} onCateClick={onCateClick} liWidth={ddLiWidth} cate={c} />));
+        const baseFontsize = Number(document.documentElement.style.fontSize.match(/(\d*(\.\d*)?)px/)[1]);
+        let cateNodes = [];
+        let ddCateNodes = [];
+        for (let i = 0; i < categories.length; i++) {
+            let navLeft = this.calNavleft(liWidth, baseFontsize, i, categories.length);
+            cateNodes.push((<Cate activeCate={activeCate} navLeft={navLeft} onCateClick={onCateClick} liWidth={liWidth} cate={categories[i]} />));
+            ddCateNodes.push((<Cate activeCate={activeCate} navLeft={navLeft} onCateClick={onCateClick} liWidth={ddLiWidth} cate={categories[i]} />));
+        }
+        // let cateNodes = categories.map(
+        //     (c, index) => (<Cate activeCate={activeCate} index={index} onCateClick={onCateClick} liWidth={liWidth} cate={c} />));
+        // let ddCateNodes = categories.map(
+        //     (c, index) => (<Cate activeCate={activeCate} index={index} onCateClick={onCateClick} liWidth={ddLiWidth} cate={c} />));
 
         // 事件组合
         const events = {

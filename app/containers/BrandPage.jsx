@@ -4,10 +4,6 @@ import { connect } from 'react-redux';
 import Brand from '../components/brand';
 import { loadProducts } from '../actions/brand.js';
 
-function loadData(props, page) {
-	props.loadProducts(0, page);
-}
-
 class BrandPage extends Component {
 	constructor(props) {
 		super(props);
@@ -21,21 +17,25 @@ class BrandPage extends Component {
         // 判断isLoading状态，
         if (!this.props.isLoading && (scrollHeight - winHeight - scrollTop) <= threshold) {
 			let currPage = this.props.pagination;
+			this.props.loadProducts(window.BRAND_ID, currPage ? (currPage + 1) : 1);
 			// loadData(this.props, currPage ? (currPage + 1) : 1);
         }
     }
     componentWillMount() {
-        loadData(this.props, this.props.pagination);
+		this.props.loadProducts(window.BRAND_ID, this.props.pagination);
+        // loadData(this.props, this.props.pagination);
     }
     render() {
         const { brand, products, pagination } = this.props;
         return (
-            <div>
-                <Brand brand={brand} products={products} />
-            </div>
+            <Brand brand={brand} products={products} />
         );
     }
 }
+
+BrandPage.defaultProps = {
+	pagination: 1,
+};
 
 function mapStateToProps(state) {
     const { brand, products, pagination } = state;

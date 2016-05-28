@@ -12,7 +12,7 @@ function receiveAccount(account) {
 export function loadAccount(sid) {
     return (dispatch, getState) => {
         $.ajax({
-            url: '/v1/account',
+            url: '/fanliba/v1/account',
             data: {
                 sid,
             },
@@ -38,7 +38,7 @@ function receiveOrders(orders) {
 export function loadOrders(sid) {
     return (dispatch, getState) => {
         $.ajax({
-            url: '/v1/orders',
+            url: '/fanliba/v1/orders',
             data: {
                 sid,
             },
