@@ -2,51 +2,39 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import { Router, Route, IndexRoute, browserHistory } from 'react-router';
+import { Router, Route, IndexRoute, hashHistory } from 'react-router';
 import RebatePage from '../../containers/RebatePage';
+import ProductList from '../../components/rebate/ProductList';
 import rootReducer from '../../reducers';
 import configureStore from '../../stores/configureStore';
 
 // 从smarty获取的category的数据
 const cateArray = window.CATE_DATA.list;
 const store = configureStore(rootReducer, {
-    cates: {
-        isMoving: false,
-        navLeft: 0,
-        activeCate: '29',
-        categories: cateArray,
-    },
+  cates: {
+    isMoving: false,
+    // navLeft: 0,
+    activeCate: window.ALL_CATE_ID,
+    categories: cateArray,
+  },
 });
 
 // store.subscribe(() =>
 //     console.log(store.getState())
 // );
 
-// render(
-//     <Provider store={store}><RebatePage /></Provider>,
-//     document.getElementById('example')
-// );
-
 // /app/page/rebate/
 // /fanliba/view/rebate/
-// <div>
-//     <Router history={browserHistory}>
-//         <Route path="/fanliba/view/rebate/" component={RebatePage}>
-//         </Route>
-//     </Router>
-// </div>
+// <IndexRoute component={RebatePage} />
+// <IndexRoute component={RebatePage} />
 render(
-    <Provider store={store}>
-        <RebatePage />
-    </Provider>,
-    document.getElementById('example')
+  <Provider store={store}>
+    <Router history={hashHistory}>
+      <Route path="/" component={RebatePage}>
+        <IndexRoute component={ProductList} />
+        <Route path=":cateId" component={ProductList} />
+      </Route>
+    </Router>
+  </Provider>,
+  document.getElementById('example')
 );
-//
-// render(
-//     <Router history={browserHistory}>
-//         <Route path="/app/page/" component={Brand}>
-//         </Route>
-//         <Route path="/app/page/other" component={Other} />
-//     </Router>,
-//     document.getElementById('example')
-// );

@@ -2,7 +2,7 @@
  * @require CateNav.less
  */
 
-import React, {Component, PropTypes} from 'react';
+import React, { Component, PropTypes } from 'react';
 import Cate from './Cate.jsx';
 
 class CateNav extends Component {
@@ -20,6 +20,7 @@ class CateNav extends Component {
       parentWidth: 0,
     };
   }
+
   // 触屏开始
   handleTouchStart(e) {
     const event = e || window.event;
@@ -72,15 +73,18 @@ class CateNav extends Component {
     } = this.props;
     let liWidth = 2.12;
     let ddLiWidth = 2.5;
-    let ulStyle = {
-      left: `${navLeft}px`,
-      width: `${categories.length * liWidth + 0.5}rem`, // 加0.5的缓冲
-    };
+    let activeNavleft = navLeft;
     const baseFontsize = Number(document.documentElement.style.fontSize.match(/(\d*(\.\d*)?)px/)[1]);
     let cateNodes = [];
     let ddCateNodes = [];
     for (let i = 0; i < categories.length; i++) {
+      const c = categories[i];
+      // TODO 应该在render完成以后，把每个category对应的navLeft存储在state中
       let nf = this.calNavleft(liWidth, baseFontsize, i, categories.length);
+      if (c.iid == activeCate) {
+        // 改变state里的navLeft
+        activeNavleft = nf;
+      }
       cateNodes.push((<Cate
         activeCate={activeCate}
         navLeft={nf}
@@ -96,6 +100,10 @@ class CateNav extends Component {
         cate={categories[i]}
       />));
     }
+    let ulStyle = {
+      left: `${activeNavleft}px`,
+      width: `${categories.length * liWidth + 0.5}rem`, // 加0.5的缓冲
+    };
 
     // 事件组合
     const events = {
@@ -131,15 +139,22 @@ class CateNav extends Component {
   }
 }
 
+// CateNav.defaultProps = {
+//   activeCate: window.ALL_CATE_ID,
+// };
+
 CateNav.propTypes = {
-  activeCate: PropTypes.string.isRequired,
+  activeCate: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]),
   categories: PropTypes.array.isRequired,
   toggleDD: PropTypes.func,
-  visibilityDropdown: PropTypes.func,
+  visibilityDropdown: PropTypes.bool,
   onCateClick: PropTypes.func,
   onCateMove: PropTypes.func,
   onCoverClick: PropTypes.func,
-  navLeft: PropTypes.number.isRequired,
+  navLeft: PropTypes.number,
 };
 
 export default CateNav;

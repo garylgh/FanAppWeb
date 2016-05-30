@@ -21,9 +21,9 @@ class ProductList extends Component {
 
     let productNodes;
     if (itemType === 'exchange') {
-      productNodes = products.map(p => (<ExchangeItem key={p.iid} data={p} />));
+      productNodes = products.map(p => (<ExchangeItem data={p} />));
     } else {
-      productNodes = products.map(p => (<ProductItem key={p.iid} data={p} />));
+      productNodes = products.map(p => (<ProductItem data={p} />));
     }
     return (
       <div className="product-wrap">
