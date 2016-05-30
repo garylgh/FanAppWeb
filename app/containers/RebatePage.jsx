@@ -20,7 +20,7 @@ class RebatePage extends Component {
   componentWillMount() {
     const { fetchRebatesIfNeeded, pagination, params } = this.props;
     const activeCate = params.cateId ? params.cateId : window.ALL_CATE_ID; // 26是默认的全部
-    fetchRebatesIfNeeded(activeCate, pagination[activeCate]);
+    // fetchRebatesIfNeeded(activeCate, pagination[activeCate]);
     this.props.changeCate(activeCate);
   }
   componentDidMount() {
@@ -54,7 +54,7 @@ class RebatePage extends Component {
     // 判断isLoading状态，
     if (!this.props.products.isLoading && (scrollHeight - winHeight - scrollTop) <= threshold) {
       const currPage = this.props.pagination[this.props.activeCate];
-      loadData(this.props, currPage ? (currPage + 1) : 1);
+      this.props.fetchRebatesIfNeeded(this.props.activeCate, currPage ? (currPage + 1) : 1);
     }
   }
   render() {
