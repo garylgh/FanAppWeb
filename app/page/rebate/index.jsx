@@ -14,7 +14,7 @@ const store = configureStore(rootReducer, {
   cates: {
     isMoving: false,
     // navLeft: 0,
-    activeCate: window.ALL_CATE_ID,
+    // activeCate: window.ALL_CATE_ID,
     categories: cateArray,
   },
 });

@@ -21,16 +21,16 @@ class ProductList extends Component {
 
     let productNodes;
     if (itemType === 'exchange') {
-      productNodes = products.map(p => (<ExchangeItem data={p} />));
+      productNodes = products.map(p => (<ExchangeItem key={p.iid} data={p} />));
     } else {
-      productNodes = products.map(p => (<ProductItem data={p} />));
+      productNodes = products.map(p => (<ProductItem key={p.iid} data={p} />));
     }
     return (
       <div className="product-wrap">
         <ul className="product-list clearfix" id="productList">
           {productNodes}
         </ul>
-        <div style={{ display: 'none' }} className="dropload-down">加载中...</div>
+        <div className="dropload-down"><span>加载中...</span></div>
       </div>
     );
   }

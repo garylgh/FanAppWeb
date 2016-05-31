@@ -14,18 +14,17 @@ class CateNav extends Component {
     this.handleCoverClick = this.handleCoverClick.bind(this);
 
     this.moveData = {
-      originLeft: 0,
+      currentLeft: 0,
       startX: 0, // 按下位置
       width: 0,
       parentWidth: 0,
     };
   }
-
   // 触屏开始
   handleTouchStart(e) {
     const event = e || window.event;
     this.moveData.startX = event.touches[0].pageX;
-    this.moveData.originLeft = this.props.navLeft;
+    this.moveData.currentLeft = this.refs.mainNav.offsetLeft;
     this.moveData.width = this.refs.mainNav.offsetWidth;
     this.moveData.parentWidth = this.refs.mainNav.parentNode.offsetWidth;
     this.moveData.maxLeft = this.moveData.parentWidth - this.moveData.width - 20;
@@ -37,7 +36,8 @@ class CateNav extends Component {
     const event = e || window.event;
     const nowX = event.touches[0].pageX;
     const offsetX = nowX - this.moveData.startX;
-    const navLeft = this.moveData.originLeft + offsetX * 2;
+    const navLeft = this.moveData.currentLeft + offsetX * 2;
+    console.log(`offsetX = ${offsetX}, navLeft = ${navLeft}`);
     if (navLeft >= this.moveData.maxLeft && navLeft <= 0) { // 左移的极限
       this.props.onCateMove(navLeft);
     }
@@ -79,13 +79,13 @@ class CateNav extends Component {
     let ddCateNodes = [];
     for (let i = 0; i < categories.length; i++) {
       const c = categories[i];
-      // TODO 应该在render完成以后，把每个category对应的navLeft存储在state中
       let nf = this.calNavleft(liWidth, baseFontsize, i, categories.length);
-      if (c.iid == activeCate) {
-        // 改变state里的navLeft
+      // importent: 只有initial render时才需要通过activeCate来定位。其它时候使用parent传递下来的navLeft
+      if (!navLeft && c.iid === activeCate) {
         activeNavleft = nf;
       }
       cateNodes.push((<Cate
+        key={c.iid}
         activeCate={activeCate}
         navLeft={nf}
         onCateClick={onCateClick}
@@ -93,6 +93,7 @@ class CateNav extends Component {
         cate={categories[i]}
       />));
       ddCateNodes.push((<Cate
+        key={`dd_${c.iid}`}
         activeCate={activeCate}
         navLeft={nf}
         onCateClick={onCateClick}
@@ -139,15 +140,8 @@ class CateNav extends Component {
   }
 }
 
-// CateNav.defaultProps = {
-//   activeCate: window.ALL_CATE_ID,
-// };
-
 CateNav.propTypes = {
-  activeCate: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]),
+  activeCate: PropTypes.number,
   categories: PropTypes.array.isRequired,
   toggleDD: PropTypes.func,
   visibilityDropdown: PropTypes.bool,

@@ -13,7 +13,7 @@ function Cate({ activeCate, liWidth, navLeft, cate, onCateClick }) {
   // onClick={handleClick}
   return (
     <li
-      className={activeCate == cate.iid ? "nav-item active" : "nav-item"}
+      className={activeCate === cate.iid ? "nav-item active" : "nav-item"}
       data-category={cate.iid}
       style={liStyle}>
       <Link to={toUrl} onClick={handleClick}>{cate.name}</Link>
@@ -22,7 +22,7 @@ function Cate({ activeCate, liWidth, navLeft, cate, onCateClick }) {
 }
 
 Cate.propTypes = {
-  activeCate: PropTypes.string.isRequired,
+  activeCate: PropTypes.number,
   cate: PropTypes.object.isRequired,
   liWidth: PropTypes.number.isRequired,
   navLeft: PropTypes.number,

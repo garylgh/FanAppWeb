@@ -17,18 +17,65 @@ class RebatePage extends Component {
     this.handleScroll = this.handleScroll.bind(this);
     this.handleCoverClick = this.handleCoverClick.bind(this);
   }
+  /**
+   * Invoked once, immediately before the initial rendering occurs.
+   * If you call setState within this method, render() will see the updated state
+   * and will be executed only once despite the state change.
+   */
   componentWillMount() {
-    const { fetchRebatesIfNeeded, pagination, params } = this.props;
-    const activeCate = params.cateId ? params.cateId : window.ALL_CATE_ID; // 26是默认的全部
-    // fetchRebatesIfNeeded(activeCate, pagination[activeCate]);
+    const { params } = this.props;
+    const activeCate = params.cateId ? parseInt(params.cateId, 10) : window.ALL_CATE_ID; // 26是默认的全部
     this.props.changeCate(activeCate);
   }
+  /**
+   * Invoked once, immediately after the initial rendering occurs.
+   * At this point in the lifecycle, you can access any refs to your children.
+   * The componentDidMount() method of child components is invoked before that of parent components.
+   */
   componentDidMount() {
     window.addEventListener('scroll', this.handleScroll);
   }
-  // 在初始化渲染的时候该方法不会被调用。
+  /**
+   * Invoked when a component is receiving new props. This method is not called for the initial render.
+   * Use this as an opportunity to react to a prop transition before render() is called
+   * by updating the state using this.setState()
+   * Calling this.setState() within this function will not trigger an additional render.
+   * It will be called if props change.
+   */
+  componentWillReceiveProps() {
+  }
+  /**
+   * Invoked before rendering when new props or state are being received.
+   * This method is not called for the initial render or when forceUpdate is used.
+   * Use this as an opportunity to return false when you're certain
+   * that the transition to the new props and state will not require a component update.
+   *
+   * If shouldComponentUpdate returns false, then componentWillUpdate and componentDidUpdate will not be called.
+   */
+  shouldComponentUpdate() {
+    return true;
+  }
+  /**
+   * Invoked immediately before rendering when new props or state are being received.
+   * This method is not called for the initial render.
+   *
+   * You cannot use this.setState() in this method.
+   * If you need to update state in response to a prop change, use componentWillReceiveProps instead.
+   */
   componentWillUpdate() {
   }
+  /**
+   * Invoked immediately after the component's updates are flushed to the DOM.
+   * This method is not called for the initial render.
+   * Use this as an opportunity to operate on the DOM when the component has been updated.
+   */
+  componentDidUpdate() {
+  }
+  /**
+   * Invoked immediately before a component is unmounted from the DOM.
+   * Perform any necessary cleanup in this method,
+   * such as invalidating timers or cleaning up any DOM elements that were created in componentDidMount.
+   */
   componentWillUnmount() {
     window.removeEventListener('scroll', this.handleScroll);
   }
@@ -36,7 +83,7 @@ class RebatePage extends Component {
   handleCateClick(cateId, navLeft) {
 		// TODO move cate
     this.props.moveCate(true, navLeft);
-    this.props.changeCate(cateId);
+    this.props.changeCate(parseInt(cateId, 10));
   }
   // 点击遮罩层
   handleCoverClick() {
@@ -63,13 +110,12 @@ class RebatePage extends Component {
 			navLeft,
 			visibilityDropdown,
       activeCate,
-      params,
 			categories,
 			products,
       children,
 		} = this.props;
 
-    const activeProducts = products[activeCate || window.ALL_CATE_ID] || [];
+    const activeProducts = products[activeCate] || [];
     return (
       <div>
         <CateNav
@@ -96,10 +142,8 @@ RebatePage.propTypes = {
 	// 握草，居然是func，不是function
   dispatch: PropTypes.func,
   visibilityDropdown: PropTypes.bool.isRequired,
-  activeCate: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]),
+  activeCate: PropTypes.number,
+  children: PropTypes.element.isRequired,
   categories: PropTypes.array.isRequired,
   products: PropTypes.object.isRequired,
   navLeft: PropTypes.number,
@@ -107,6 +151,7 @@ RebatePage.propTypes = {
   moveCate: PropTypes.func,
   changeCate: PropTypes.func,
   hideDropdown: PropTypes.func,
+  fetchRebatesIfNeeded: PropTypes.func,
 };
 
 function mapStateToProps(state) {

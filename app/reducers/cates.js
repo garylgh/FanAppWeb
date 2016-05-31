@@ -6,7 +6,6 @@ import {
 } from '../actions/rebate.js';
 
 const initialState = {
-  activeCate: '0',
   categories: [],
 };
 
