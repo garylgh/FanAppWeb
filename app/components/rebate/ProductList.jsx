@@ -8,11 +8,8 @@ import ExchangeItem from '../exchange/ExchangeItem.jsx';
 import $ from '../../../node_modules/jquery/dist/jquery.min.js';
 
 class ProductList extends Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
-    const { products, itemType } = this.props;
+    const { products, itemType, wrapStyle } = this.props;
     // if (!products || products.length === 0) {
     //     return (
     //         <h2>loading</h2>
@@ -21,12 +18,14 @@ class ProductList extends Component {
 
     let productNodes;
     if (itemType === 'exchange') {
-      productNodes = products.map(p => (<ExchangeItem key={p.iid} data={p} />));
+      productNodes = products.map(p => (<ExchangeItem data={p} />));
+      // productNodes = products.map(p => (<ExchangeItem key={p.iid} data={p} />));
     } else {
-      productNodes = products.map(p => (<ProductItem key={p.iid} data={p} />));
+      productNodes = products.map(p => (<ProductItem data={p} />));
+      // productNodes = products.map(p => (<ProductItem key={p.iid} data={p} />));
     }
     return (
-      <div className="product-wrap">
+      <div className="product-wrap" style={wrapStyle}>
         <ul className="product-list clearfix" id="productList">
           {productNodes}
         </ul>

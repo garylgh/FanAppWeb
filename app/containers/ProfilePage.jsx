@@ -13,11 +13,9 @@ class ProfilePage extends Component {
     // 此处的children是根据route path确定的对应的component
     const { dispatch, children, account, orders } = this.props;
     let transition = 'sfr';
-    // if (!account.userInfo) {
-    //   return (
-    //     <h2>Loading</h2>
-    //   );
-    // }
+    if (!account.userInfo) {
+      return null;
+    }
 
     return (
       <Container direction="column" id="sk-container">

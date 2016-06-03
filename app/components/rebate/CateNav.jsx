@@ -115,7 +115,7 @@ class CateNav extends Component {
     };
 
     return (
-      <section className="w-section nav-section clearfix">
+      <section className="w-section nav-section">
         <div className="nav-wrap">
           <ul id="mainNav" ref="mainNav" style={ulStyle} {...events}>
             {cateNodes}

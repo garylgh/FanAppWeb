@@ -1,81 +1,66 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import ProductList from '../components/rebate/ProductList.jsx';
+import { loadSearch } from '../actions/search.js';
 
-// function loadData(props, page) {
-// 	props.fetchRebatesIfNeeded(props.activeCate, page);
-// }
-
-const keybarStyles = {
-	position: 'fixed',
-    background: '#fff',
-	borderLeft: '5px solid #FC3768',
-	width: '100%',
-	display: 'flex',
+const searchTipStyles = {
+  textAlign: 'center',
+  margin: '2rem auto',
+  fontSize: '36px',
 };
-const keyStyles = {
-	height: '1.2rem',
-	lineHeight: '1.2rem',
-    padding: '0 0.3rem',
-    fontSize: '32px',
-}
 
-function KeywordBar({ keyword }) {
-	return (
-		<section style={keybarStyles}>
-			<div style={keyStyles}>关键字：{keyword}</div>
-		</section>
-	)
+function SearchTip() {
+  return (
+    <div style={searchTipStyles}>请输入需要查询的商品名称</div>
+  );
 }
 
 class SearchPage extends Component {
-	constructor(props) {
-		super(props);
-		// this.handleScroll = this.handleScroll.bind(this);
-	}
-	componentWillMount() {
-		// loadData(this.props, this.props.pagination[this.props.activeCate]);
-	}
-	// handleScroll(e) {
-	// 	let threshold = 300;
-    //     let scrollTop = document.body.scrollTop;
-    //     let winHeight = window.innerHeight;
-    //     let scrollHeight = document.documentElement.scrollHeight;
-    //     // 判断isLoading状态，
-    //     if (!this.props.products.isLoading && (scrollHeight - winHeight - scrollTop) <= threshold) {
-	// 		let currPage = this.props.pagination[this.props.activeCate];
-	// 		loadData(this.props, currPage ? (currPage + 1) : 1);
-    //     }
-    // }
-	// componentDidMount() {
-	// 	window.addEventListener('scroll', this.handleScroll);
-	// }
-	// componentWillUnmount() {
-	// 	window.removeEventListener('scroll', this.handleScroll);
-	// }
-	render() {
-		const { products, keyword } = this.props;
-		return (
-			<div>
-				<KeywordBar keyword={keyword}/>
-				<ProductList products={products} />
-			</div>
-        );
-	}
+  constructor(props) {
+    super(props);
+    this.handleScroll = this.handleScroll.bind(this);
+  }
+  componentDidMount() {
+    window.addEventListener('scroll', this.handleScroll);
+  }
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.handleScroll);
+  }
+  handleScroll() {
+    const threshold = 300;
+    const scrollTop = document.body.scrollTop;
+    const winHeight = window.innerHeight;
+    const scrollHeight = document.documentElement.scrollHeight;
+    // 判断isLoading状态，
+    if (!this.props.products.isLoading && (scrollHeight - winHeight - scrollTop) <= threshold) {
+      const { pagination, keyword, dispatch } = this.props;
+      dispatch(loadSearch(keyword, pagination ? (pagination + 1) : 1));
+    }
+  }
+  render() {
+    const { products, keyword } = this.props;
+
+    if (!keyword) {
+      return (
+        <SearchTip />
+      );
+    }
+    return (
+      <ProductList products={products} wrapStyle={{ paddingTop: 0, paddingBottom: '0.3rem' }} />
+    );
+  }
 }
 
 SearchPage.propTypes = {
-	dispatch: PropTypes.func,
-	products: PropTypes.array.isRequired,
+  dispatch: PropTypes.func,
+  products: PropTypes.array.isRequired,
+  keyword: PropTypes.string,
+  pagination: PropTypes.number,
 };
 
 function mapStateToProps(state) {
-	const { products, keyword, pagination } = state;
-	return {
-		products,
-		pagination,
-		keyword,
-	};
+  const { products, keyword, pagination } = state;
+  return { products, pagination, keyword };
 }
 
 export default connect(mapStateToProps)(SearchPage);

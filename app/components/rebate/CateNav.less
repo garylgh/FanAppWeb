@@ -1,9 +1,13 @@
 .nav-section {
   position: fixed;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
   background: #fff;
 }
 .nav-wrap {
-  float: left;
+  /* float: left;*/
   width: 8.75rem;
   ul {
     position: relative;
@@ -30,8 +34,8 @@
 
 .nav-dropdown {
   width: 1.25rem;
-  height: 100%;
-  float: right;
+  height: 1.25rem;
+  /* float: right;*/
   background: #fff;
   /* 防止ul transform时index失效*/
   .arrow {
@@ -80,16 +84,16 @@
     }
   }
   .more-nav {
-    // position: absolute;
+    /* position: absolute;*/
     position: absolute;
     left: 0;
     top: 0;
     background: #fff;
   }
   .d-cover {
-    // position: absolute;
-    // left: 0;
-    // top: 0;
+    /* position: absolute;*/
+    /* left: 0;*/
+    /* top: 0;*/
     background: #888;
     opacity: 0.4;
     width: 100%;

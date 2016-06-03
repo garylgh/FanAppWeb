@@ -5,30 +5,27 @@
 	<meta charset="UTF-8">
 	<title>Document</title>
 	<style>
-		.test {
-			width: 100px;
-			height: 100px;
-		}
+		.box {
+      display: flex;
+		  width: 400px;
+      height: 400px;
+      margin: 0 auto;
+      border: 1px solid #333;
+      border-radius: 10px;
+      padding: 20px;
 
-		.test-1 {
-			position: relative;
-			background: #f20;
-		}
-
-		.test-2 {
-			-webkit-transform: scale(.9);
-			transform: scale(.9);
-			margin-top: -50px;
-			background: #000;
+      /*flex-direction: column-reverse;*/
+      align-items: center;
+      justify-content: center;
 		}
 	</style>
 </head>
 
 <body>
-	<div class="test test-1">
-	</div>
-	<div class="test test-2">
-	</div>
+  <div class="box">
+    <span class="item">1</span>
+    <span class="item">2</span>
+  </div>
 </body>
 
 </html>
