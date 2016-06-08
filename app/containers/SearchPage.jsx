@@ -40,7 +40,7 @@ class SearchPage extends Component {
   render() {
     const { products, keyword } = this.props;
 
-    if (!keyword) {
+    if (!keyword && products.length === 0) {
       return (
         <SearchTip />
       );

@@ -5,15 +5,9 @@
 import React, { PropTypes } from 'react';
 
 function ProductItem({ data }) {
-  let url;
-  if (data.jumpType === 0) {
-    url = data.picTargetUrl;
-  } else {
-    url = `/fanlib/view/brand?brandId=${data.iid}`;
-  }
   return (
     <li className="product-item">
-      <a href={url} className="item-wrap">
+      <a href={data.productUrlWap} className="item-wrap">
         <img src={data.picUrl} width="150px" height="150px" alt="" />
         <div className="product-desc">{data.name}</div>
         <div className="product-price">

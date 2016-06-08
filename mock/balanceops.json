@@ -1,0 +1,23 @@
+{
+    "err_no": 0,
+    "err_msg": "",
+    "data": {
+        "list":[{
+          "T": "opBalance",
+          "iid": "9",
+          "opType": "100",
+          "status": "0",
+          "amount": "10000",
+          "peerPrice": "10",
+          "peerCount": "1",
+          "peerAmount": "10",
+          "info": "兑换1 份10元话费",
+          "date": "2016-06-07",
+          "statusStr": "待审核",
+          "amountStr": "10000K币"
+        }],
+        "next": "1",
+        "total": "1",
+        "pages": "1"
+    }
+}

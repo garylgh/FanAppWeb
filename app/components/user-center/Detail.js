@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { Container, Group, NavBar, TabBar, View } from 'amazeui-touch';
 import { Link } from 'react-router';
+import { connect } from 'react-redux';
 
 import Details from './sub-detail';
 
@@ -16,7 +17,7 @@ const NotFound = React.createClass({
 
 class Detail extends Component {
   render() {
-    const { dispatch, account, orders } = this.props;
+    const { dispatch, account } = this.props;
     let component = this.props.params.component;
 
     if (component) {
@@ -24,21 +25,13 @@ class Detail extends Component {
     }
 
     let SubDetail = Details[component] || NotFound;
-    // let componentTitle = Details[`${component}Name`];
-    // let backNav = {
-    //   component: Link,
-    //   icon: 'left-nav',
-    //   title: '返回',
-    //   to: '/'
-    // };
 
     return (
       <View id="sk-detail">
-        <SubDetail scrollable dispatch={dispatch} account={account} orders={orders} className="sk-demos" />
+        <SubDetail scrollable dispatch={dispatch} account={account} className="sk-demos" />
       </View>
     );
   }
 }
 
-// <Component scrollable className="sk-demos"/>
 export default Detail;

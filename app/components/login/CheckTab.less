@@ -1,10 +1,16 @@
 ul.lrtab {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
     height: 1.2rem;
     width: 100%;
     background: #fff;
     li {
-        flex: 1;
+        -webkit-box-flex: 1;
+        -webkit-flex: 1;
+            -ms-flex: 1;
+                flex: 1;
         text-align: center;
         font-size: 36px;
         line-height: 1.1rem;
@@ -68,9 +74,15 @@ ul.lrtab {
         outline: 0;
     }
     .valid-code {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
         display: flex;
         input, a {
-            flex: 1;
+            -webkit-box-flex: 1;
+            -webkit-flex: 1;
+                -ms-flex: 1;
+                    flex: 1;
         }
         a {
             text-align: center;
@@ -127,6 +139,6 @@ ul.lrtab {
         text-decoration: none;
         text-align: center;
         font-weight: 900;
-        // background: #e1e1e1;
+        /* background: #e1e1e1;*/
     }
 }

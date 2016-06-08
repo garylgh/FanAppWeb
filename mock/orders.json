@@ -3,17 +3,17 @@
     "err_msg": "",
     "data": {
         "list":[{
-            "iid": "123123",
-            "srcType": "1",
-            "status": "1",
-            "orderAmount": "123",
-            "productAmount": "123",
-            "rebateAmount": "423",
-            "rebateType": "2",
-            "rebateStatus": "4",
-            "receiveDate": "2015-11-20",
-            "createTime": "2015-11-20",
-            "updateTime": "2015-11-20"
+            "T": "buOrder",
+            "iid": "2",
+            "status": 0,
+            "srcId": "8888888888888888",
+            "receiveDate": "2016-05-26 17:16:00",
+            "thawedDate": "2016-07-26 12:10:00",
+            "orderDesc": "5月26日, 测试商品*1份",
+            "orderAmount": "30.10",
+            "rebateAmount": "10.00",
+            "rebateType": 1,
+            "rebateStatus": 0
         }],
         "next": "1",
         "total": "1",

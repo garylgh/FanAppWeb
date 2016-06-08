@@ -1,10 +1,13 @@
-import Withdraw, { WithdrawName } from './WithdrawDetail';
-import Order, { OrderName } from './OrderDetail';
-
+import Withdraw from './WithdrawDetail';
+import Order from './OrderDetail';
+import Account from './AccountDetail';
+import ChangePhone from './ChangePhoneDetail.js';
+import NewPhone from './NewPhoneDetail.js';
 
 export default {
-    Withdraw,
-    WithdrawName,
-    Order,
-    OrderName,
+  Withdraw,
+  Order,
+  Account,
+  ChangePhone,
+  NewPhone,
 };

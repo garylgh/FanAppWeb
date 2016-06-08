@@ -19,9 +19,36 @@ const store = configureStore(rootReducer, initialState);
 /**
  * 此接口暴露给App外壳调用
  */
-function doSearch(keyword) {
-  store.dispatch(loadSearch(keyword, 1));
+function setupWebViewJavascriptBridge(callback) {
+  if (window.WebViewJavascriptBridge) {
+    return callback(window.WebViewJavascriptBridge);
+  }
+  if (window.WVJBCallbacks) {
+    return window.WVJBCallbacks.push(callback);
+  }
+  window.WVJBCallbacks = [callback];
+  const WVJBIframe = document.createElement('iframe');
+  WVJBIframe.style.display = 'none';
+  WVJBIframe.src = 'wvjbscheme://__BRIDGE_LOADED__';
+  document.documentElement.appendChild(WVJBIframe);
+  setTimeout(() => {
+    document.documentElement.removeChild(WVJBIframe);
+  }, 0);
 }
+
+setupWebViewJavascriptBridge((bridge) => {
+  bridge.registerHandler('doSearch', (keyword) => {
+    store.dispatch(loadSearch(keyword, 1));
+  });
+  // 应对页面reload的情况
+  bridge.callHandler('extReq', null, (keyword) => {
+    setTimeout(() => {
+      if (keyword) {
+        store.dispatch(loadSearch(keyword, 1));
+      }
+    }, 0);
+  });
+});
 
 render(
   <Provider store={store}>

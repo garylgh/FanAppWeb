@@ -37,7 +37,6 @@ class CateNav extends Component {
     const nowX = event.touches[0].pageX;
     const offsetX = nowX - this.moveData.startX;
     const navLeft = this.moveData.currentLeft + offsetX * 2;
-    console.log(`offsetX = ${offsetX}, navLeft = ${navLeft}`);
     if (navLeft >= this.moveData.maxLeft && navLeft <= 0) { // 左移的极限
       this.props.onCateMove(navLeft);
     }

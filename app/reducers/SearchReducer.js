@@ -14,7 +14,12 @@ function searchReducer(state = {}, action) {
         keyword: action.keyword,
       });
     case FETCH_SEARCH_SUCCESS: {
-      const newProducts = [].concat(state.products, action.products);
+      let newProducts;
+      if (action.pagination === 1) {
+        newProducts = action.products;
+      } else {
+        newProducts = [].concat(state.products, action.products);
+      }
       return Object.assign({}, state, {
         products: newProducts,
         pagination: action.pagination,

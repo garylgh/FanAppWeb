@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { bindActionCreators } from 'redux';
+// import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { loadAccount } from '../actions/profile.js';
 
@@ -11,7 +11,7 @@ class ProfilePage extends Component {
   }
   render() {
     // 此处的children是根据route path确定的对应的component
-    const { dispatch, children, account, orders } = this.props;
+    const { dispatch, children, account } = this.props;
     let transition = 'sfr';
     if (!account.userInfo) {
       return null;
@@ -20,16 +20,21 @@ class ProfilePage extends Component {
     return (
       <Container direction="column" id="sk-container">
         <Container transition={transition}>
-          {React.cloneElement(children, { account, orders, dispatch })}
+          {React.cloneElement(children, { dispatch })}
         </Container>
       </Container>
     );
   }
 }
 
+ProfilePage.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+  orders: PropTypes.object,
+};
+
 function mapStateToProps(state) {
-  const { account, orders } = state;
-  return { account, orders };
+  const { account } = state;
+  return { account };
 }
 
 // function mapDispatchToProps(dispatch) {

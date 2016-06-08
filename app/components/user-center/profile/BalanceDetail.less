@@ -1,0 +1,105 @@
+.c-flex {
+  display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */         /* OLD - Firefox 19- (buggy but     mostly works) */
+  display: -ms-flexbox;      /* TWEENER - IE 10 */
+  display: -webkit-flex;     /* NEW - Chrome */
+  display: flex;             /* NEW, Spec - Opera 12.1, Firefox 20+     */
+}
+.account-wrap {
+  width: 100%;
+  /* height: 5.2rem;*/
+  /* padding: 0.4rem;*/
+  .user {
+    /* display: flex;*/
+    padding: 0.8rem 1rem;
+    border-bottom: 1px solid #fff;
+    background: #fff;
+  }
+  img.user-pic {
+    float: left;
+    width: 5rem;
+    height: 5rem;
+    background: #c1c1c1;
+  }
+  .user-info {
+    width: 100%;
+    margin-left: 6rem;
+    .name {
+      color: #000;
+      font-size: 30px;
+      font-weight: 900;
+    }
+    .phone {
+      color: #888;
+      font-size: 24px;
+    }
+    .u-level {
+      -webkit-box-flex: 1;
+      -webkit-flex: 1;
+          -ms-flex: 1;
+              flex: 1;
+      color: #888;
+      font-size: 24px;
+    }
+    .u-credit {
+      -webkit-box-flex: 2;
+      -webkit-flex: 2;
+          -ms-flex: 2;
+              flex: 2;
+      color: #888;
+      font-size: 24px;
+    }
+  }
+  /* .user-name {*/
+  /*   line-height: 3rem;*/
+  /*   margin-left: 1.5rem;*/
+  /*   color: #fff;*/
+  /*   font-size: 1.25rem;*/
+  /*   font-weight: 900;*/
+  /* }*/
+
+  .balance-info {
+    background: #fff;
+    margin-top: 0.6rem;
+    padding: 0.2rem 1rem;
+  }
+
+  .b-avail {
+    margin: 0.6rem 0;
+    color: #d8d8d8;
+  }
+  .b-amount {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    height: 4rem;
+    line-height: 4rem;
+    /* margin-bottom: 1rem;*/
+    .b-withdraw,
+    .b-yuan {
+      -webkit-box-flex: 1;
+      -webkit-flex: 1;
+          -ms-flex: 1;
+              flex: 1;
+      /* color: #fff;*/
+    }
+    .b-yuan > strong {
+      font-size: 72px;
+      margin-right: 0.2rem;
+      color: #FF3366;
+    }
+  }
+  .b-withdraw {
+    text-align: right;
+    a {
+      /* margin-left: 1.5rem;*/
+      padding: 0.6rem 1.2rem;
+      border: none;
+      border-radius: 0.8rem;
+      font-size: 30px;
+      /* color: #fff;*/
+      background: transparent;
+      text-decoration: none;
+    }
+  }
+}
