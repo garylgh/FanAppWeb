@@ -5,15 +5,13 @@ import { connect } from 'react-redux';
 
 import Details from './sub-detail';
 
-const NotFound = React.createClass({
-  render() {
-    return (
-      <Group header="404">
-        <h2>Not found.</h2>
-      </Group>
-    );
-  }
-});
+function NotFound() {
+  return (
+    <Group header="404">
+      <h2>Not found.</h2>
+    </Group>
+  );
+}
 
 class Detail extends Component {
   render() {
@@ -34,4 +32,9 @@ class Detail extends Component {
   }
 }
 
-export default Detail;
+function mapStateToProps(state) {
+  const { account } = state;
+  return { account };
+}
+
+export default connect(mapStateToProps)(Detail);

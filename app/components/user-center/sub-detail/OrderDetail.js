@@ -52,15 +52,15 @@ class OrderDetail extends Component {
     this.handleClickTab = this.handleClickTab.bind(this);
   }
   componentWillMount() {
-    const { dispatch, account, orders } = this.props;
+    const { dispatch, orders } = this.props;
 
     const currPage = orders.pagination[orders.selectedIndex];
     if (shouldFetchOrders(currPage, orders.selectedIndex, 1)) {
-      dispatch(loadOrders(account.iid, orders.selectedIndex));
+      dispatch(loadOrders(orders.selectedIndex));
     }
   }
   handleClickTab(selectedIndex) {
-    this.props.dispatch(changeOrderTab(this.props.account.iid, selectedIndex));
+    this.props.dispatch(changeOrderTab(window.SID, selectedIndex));
   }
   render() {
     const { orders, infos } = this.props;
@@ -87,14 +87,13 @@ OrderDetail.defaultProps = {
 OrderDetail.propTypes = {
   dispatch: PropTypes.func,
   orders: PropTypes.object,
-  account: PropTypes.object,
 };
 
 // export const OrderName = '订单记录';
 
 function mapStateToProps(state) {
-  const { account, orders } = state;
-  return { account, orders };
+  const { orders } = state;
+  return { orders };
 }
 
 export default connect(mapStateToProps)(OrderDetail);

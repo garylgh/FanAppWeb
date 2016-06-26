@@ -1,7 +1,13 @@
 import $ from '../../node_modules/jquery/dist/jquery.min.js';
+// 每个ajax请求默认都会带sid
+$.ajaxSetup({
+  // url not set here; uses ping.php
+  data: {
+    sid: window.SID,
+  },
+});
 
 export const FETCH_ACCOUNT_SUCCESS = 'FETCH_ACCOUNT_SUCCESS';
-
 function receiveAccount(account) {
   return {
     type: FETCH_ACCOUNT_SUCCESS,
@@ -9,13 +15,10 @@ function receiveAccount(account) {
   };
 }
 
-export function loadAccount(sid) {
+export function loadAccount() {
   return (dispatch, getState) => {
     $.ajax({
       url: '/fanliba/v1/account',
-      data: {
-        sid,
-      },
       dataType: 'JSON',
     })
     .done(data => {
@@ -24,6 +27,15 @@ export function loadAccount(sid) {
     .fail(() => {
       dispatch(receiveAccount({}));
     });
+  };
+}
+
+// 修改用户头像
+export const CHANGE_USER_AVATAR = 'CHANGE_USER_AVATAR';
+export function changeAvatar(avatarUrl) {
+  return {
+    type: CHANGE_USER_AVATAR,
+    avatarUrl,
   };
 }
 
@@ -39,14 +51,13 @@ function receiveOrders(selectedIndex, page, orders) {
   };
 }
 
-export function loadOrders(sid, selectedIndex, currPage) {
+export function loadOrders(selectedIndex, currPage) {
   const p = currPage || 1; // 如果没有页码就是默认第一页
   return (dispatch) => {
     $.ajax({
       url: '/fanliba/v1/orders',
       data: {
         reqType: selectedIndex,
-        sid,
         p,
       },
       dataType: 'JSON',
@@ -83,7 +94,7 @@ export function changeOrderTab(sid, selectedIndex) {
     });
     const currPage = getState().orders.pagination[selectedIndex];
     if (shouldFetchOrders(currPage, selectedIndex, 1)) { // 每次切换就到第一页去
-      return dispatch(loadOrders(sid, selectedIndex, 1));
+      return dispatch(loadOrders(selectedIndex, 1));
     }
   };
 }
@@ -144,5 +155,13 @@ export function changeWithdrawTab(sid, selectedIndex) {
     if (shouldFetchWithdraws(currPage, selectedIndex, 1)) { // 每次切换就到第一页去
       return dispatch(loadWithdraws(sid, selectedIndex, 1));
     }
+  };
+}
+
+export const OPEN_MODAL = 'OPEN_MODAL';
+export function toggleModal(modalIsOpen) {
+  return {
+    type: OPEN_MODAL,
+    modalIsOpen,
   };
 }

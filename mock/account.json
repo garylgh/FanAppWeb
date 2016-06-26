@@ -7,16 +7,7 @@
 			"iid": "12",
 			"name": "",
 			"type": 1,
-			"userId": 1,
-			"userInfo": {
-				"T": "buUser",
-				"iid": "1",
-				"account": "abc",
-				"nickName": "\u6211\u7231",
-				"gender": "1",
-				"email": "jeancky@163.com",
-				"mobile": "13466535179"
-			},
+			"userId": 0,
 			"balanceMajor": {
 				"T": "buBalance",
 				"iid": "4",

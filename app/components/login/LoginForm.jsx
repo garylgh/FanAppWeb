@@ -23,7 +23,7 @@ class LoginForm extends Component {
   render() {
     const { selectedIndex } = this.props;
     return (
-      <div className={selectedIndex == 1 ? '' : ''} id="loginForm" data-index="1">
+      <div className={selectedIndex == 1 ? 'active' : ''} id="loginForm" data-index="1">
         <form className="lr-form">
           <div className="form-group">
             <div className="icon-label">

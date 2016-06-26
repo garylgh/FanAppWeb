@@ -3,6 +3,14 @@
     <head>
         <link rel="import" href="../../../widgets/common/base-head.html?__inline" >
         <title>登录注册</title>
+        <script type="text/javascript">
+          if (!window.SID) {
+            window.SID = '{%$sid%}';
+          }
+          if (!window.C_APP) {
+            window.C_APP = '{%$c_app%}';
+          }
+        </script>
     </head>
     <body>
 		<div class="lcontainer clearfix" id="example">

@@ -5,6 +5,14 @@ import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 
 function ProfileDetail() {
+  function handleRate(e) {
+    e.preventDefault();
+    if (window.WebViewJavascriptBridge) {
+      window.WebViewJavascriptBridge.callHandler('rateApp', null);
+    } else {
+      alert('鼓励失败');
+    }
+  }
   return (
     <section className="group-wrap">
       <div className="p-group">
@@ -41,10 +49,10 @@ function ProfileDetail() {
               </Link>
             </li>
             <li className="p-item">
-              <Link to="accordion">
+              <a onClick={handleRate}>
                 <h3 className="item-title">鼓励一下</h3>
                 <span className="icon icon-right-nav item-icon"></span>
-              </Link>
+              </a>
             </li>
           </ul>
         </div>

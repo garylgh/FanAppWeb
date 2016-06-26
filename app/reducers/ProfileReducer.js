@@ -7,12 +7,22 @@ import {
   CHANGE_ORDER_TAB,
   FETCH_WITHDRAW_SUCCESS,
   CHANGE_WITHDRAW_TAB,
+  CHANGE_USER_AVATAR,
+  OPEN_MODAL,
 } from '../actions/profile.js';
 
 function account(state = {}, action) {
   switch (action.type) {
     case FETCH_ACCOUNT_SUCCESS:
       return Object.assign({}, state, action.account);
+    case CHANGE_USER_AVATAR: {
+      const userInfo = Object.assign({}, state.userInfo, {
+        avatarUrl: action.avatarUrl,
+      });
+      return Object.assign({}, state, {
+        userInfo,
+      });
+    }
     default:
       return state;
   }
@@ -82,10 +92,24 @@ function withdraws(state = {}, action) {
   }
 }
 
+function modal(state = {
+  modalIsOpen: false,
+}, action) {
+  switch (action.type) {
+    case OPEN_MODAL:
+      return Object.assign({}, state, {
+        modalIsOpen: action.modalIsOpen,
+      });
+    default:
+      return state;
+  }
+}
+
 const profileReducer = combineReducers({
   account,
   orders,
   withdraws,
+  modal,
 });
 
 export default profileReducer;

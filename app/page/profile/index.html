@@ -24,10 +24,12 @@
         <script src="../../../dep/mod.js" data-loader charset="utf-8"></script>
         <title>个人中心</title>
         <script type="text/javascript">
-            // var params = {%$data%};
-            // if (!window.SID) {
-            //     window.SID = params.sid;
-            // }
+          if (!window.SID) {
+            window.SID = '{%$sid%}';
+          }
+          if (!window.C_APP) {
+            window.C_APP = '{%$c_app%}';
+          }
         </script>
     </head>
     <body>

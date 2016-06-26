@@ -24,6 +24,13 @@ class ProductList extends Component {
       productNodes = products.map(p => (<ProductItem data={p} />));
       // productNodes = products.map(p => (<ProductItem key={p.iid} data={p} />));
     }
+    if (!productNodes || productNodes.length === 0) {
+      return (
+        <div className="product-wrap" style={wrapStyle}>
+          <div className="dropload-down"><span>无数据...</span></div>
+        </div>
+      );
+    }
     return (
       <div className="product-wrap" style={wrapStyle}>
         <ul className="product-list clearfix" id="productList">

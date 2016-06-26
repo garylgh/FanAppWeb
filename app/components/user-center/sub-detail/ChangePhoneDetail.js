@@ -18,6 +18,8 @@ class ChangePhoneDetail extends Component {
   }
   handleValidCode(e) {
     e.preventDefault();
+    const { account } = this.props;
+    const userInfo = account.userInfo || {};
     const linkDom = this.refs.vcLink;
     if (linkDom.dataset.validating === 'true') {
       return false;
@@ -29,7 +31,7 @@ class ChangePhoneDetail extends Component {
     //   return false;
     // }
 
-    $.get('/fanliba/v1/reqsms', { mobile: '13581837625' });
+    $.get('/fanliba/v1/reqsms', { mobile: userInfo.mobile });
     let start = 60;
     linkDom.dataset.validating = 'true';
     const cdInterval = setInterval(() => {
@@ -46,11 +48,13 @@ class ChangePhoneDetail extends Component {
   // enable 下一步按钮
 
   render() {
+    const { account } = this.props;
+    const userInfo = account.userInfo || {};
     return (
       <div>
         <div className="bind-phone">
           <span>您当前绑定的手机号：</span>
-          <span>135****3456</span>
+          <span>{userInfo.mobile ? userInfo.mobile : ''}</span>
         </div>
         <div className="p-group">
           <div className="form-group">
